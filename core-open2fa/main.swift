@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-print("Hello, World!")
+let fileName = "totp.enc"
+let fileURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Documents/.cl-swift-totp/\(fileName)")
 
