@@ -24,6 +24,28 @@ func SaveFile(fileURL: URL, text: String)
 
 func Setup(fileURL: URL)
 {
-    print (fileURL.pathComponents )
-    print (fileURL.relativePath )
+    //print (fileURL.deletingLastPathComponent().relativePath )
+
+    do {
+        _ = try String(contentsOf: fileURL, encoding: .utf8)
+    } catch {
+
+        let text = "{}"
+
+        let manager = FileManager.default
+
+        let folder = fileURL.deletingLastPathComponent().relativePath
+
+        do {
+            try manager.createDirectory(atPath: folder, withIntermediateDirectories: true, attributes: nil )
+        }
+        catch {
+            print(error)
+        }
+
+        do {
+            try text.write(to: fileURL, atomically: false, encoding: .utf8)
+        }
+        catch { print(error) }
+    }
 }
