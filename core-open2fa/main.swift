@@ -14,3 +14,4 @@ let fileURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathCompo
 
 
 let o2fa = core_open2fa(fileURL: fileURL, password: "pass")
+o2fa.AddCode(service_name: "Test", code: "codeee")
