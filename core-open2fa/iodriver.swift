@@ -24,28 +24,24 @@ func SaveFile(fileURL: URL, text: String)
 
 func Setup(fileURL: URL)
 {
-    //print (fileURL.deletingLastPathComponent().relativePath )
-
     do {
         _ = try String(contentsOf: fileURL, encoding: .utf8)
     } catch {
 
-        let text = "{}"
-
         let manager = FileManager.default
-
         let folder = fileURL.deletingLastPathComponent().relativePath
 
         do {
             try manager.createDirectory(atPath: folder, withIntermediateDirectories: true, attributes: nil )
         }
-        catch {
-            print(error)
-        }
+        catch { print(error) } //TODO Update with error types
 
-        do {
-            try text.write(to: fileURL, atomically: false, encoding: .utf8)
-        }
-        catch { print(error) }
+        let IV = getIV()
+        SaveFile(fileURL: fileURL, text: """
+                                         { 
+                                         \"IV\": 
+                                             \"\(IV)\" 
+                                         } 
+                                         """ )
     }
 }

@@ -10,6 +10,9 @@
 		CDBCA36B23D2784700D979D1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA36A23D2784700D979D1 /* main.swift */; };
 		CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
 		DDC8DBF7C2D60078F87BBF44 /* libPods-core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */; };
+		E798F187636E32CC1C180DA7 /* crypt_handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */; };
+		E798F7DD4D556410882824E3 /* JSON_Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F2D2B82FCAC6182B8914 /* JSON_Handler.swift */; };
+		E798FDAC33CEF6F1BAA106B1 /* core-open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F5270960E37801C8EED2 /* core-open2fa.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +34,9 @@
 		CDBCA36723D2784700D979D1 /* core-open2fa */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "core-open2fa"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDBCA36A23D2784700D979D1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CDBCA37123D27B3200D979D1 /* iodriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iodriver.swift; sourceTree = "<group>"; };
+		E798F2D2B82FCAC6182B8914 /* JSON_Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON_Handler.swift; sourceTree = "<group>"; };
+		E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = crypt_handler.swift; sourceTree = "<group>"; };
+		E798F5270960E37801C8EED2 /* core-open2fa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "core-open2fa.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,9 @@
 			children = (
 				CDBCA37123D27B3200D979D1 /* iodriver.swift */,
 				CDBCA36A23D2784700D979D1 /* main.swift */,
+				E798F2D2B82FCAC6182B8914 /* JSON_Handler.swift */,
+				E798F5270960E37801C8EED2 /* core-open2fa.swift */,
+				E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */,
 			);
 			path = "core-open2fa";
 			sourceTree = "<group>";
@@ -175,6 +184,9 @@
 			files = (
 				CDBCA36B23D2784700D979D1 /* main.swift in Sources */,
 				CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */,
+				E798F7DD4D556410882824E3 /* JSON_Handler.swift in Sources */,
+				E798FDAC33CEF6F1BAA106B1 /* core-open2fa.swift in Sources */,
+				E798F187636E32CC1C180DA7 /* crypt_handler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
