@@ -54,47 +54,11 @@ class core_open2fa
     {
         codes.append( (key: service_name, value: code) )
 
-        /*
-        var str = "{ "
+        var collection = String()
         for code in 0..<codes.count
         {
-            str += codes[code].key + ": \"" + codes[code].value + "\","
+            collection += codes[code].key + ":" + codes[code].value + "\n" //TODO Encrypt
         }
-        str.removeLast()
-        str += " }"
-        */
-
-        var dict = [String: String]()
-
-        for code in 0..<codes.count
-        {
-            if dict[ codes[code].key ] == nil {
-                dict[ codes[code].key ] = codes[code].value
-            } else { return .ALREADY_EXIST}
-        }
-
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-            // here "jsonData" is the dictionary encoded in JSON data
-            print(jsonData)
-            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            // here "decoded" is of type `Any`, decoded from JSON data
-
-            // you can now cast it with the right type
-            if let dictFromJSON = decoded as? [String:String] {
-                // use dictFromJSON
-
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-
-
-        //let a = ["I", "am", "a", "json"]
-        //let json = JSON(arrayLiteral: a)
-        //let json: JSON
-        //print( json.rawString() )
-
 
         return .SUCCEFULL
     }
