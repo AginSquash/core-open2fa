@@ -6,7 +6,7 @@
 import Foundation
 import SwiftyJSON
 
-func getDictionary(data: Data) -> Array<(key: String, value: String)>
+func GetDictionary(data: Data) -> Array<(key: String, value: String)>
 {
     do {
         let json = try JSON(data: data)

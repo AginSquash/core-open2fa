@@ -39,8 +39,7 @@ func Setup(fileURL: URL)
         let IV = getIV()
         SaveFile(fileURL: fileURL, text: """
                                          { 
-                                         \"IV\": 
-                                             \"\(IV)\" 
+                                         \"_IV\": \"\(IV)\" 
                                          } 
                                          """ )
     }

@@ -32,16 +32,22 @@ class core_open2fa
         self.pass = password
 
         Setup(fileURL: fileURL)
-        //TODO Refresh()
+
         let data = ReadFile(fileURL: fileURL)
-        let dict = getDictionary(data: data)
+        let dict = GetDictionary(data: data)
         self.IV = dict[0].value
+
+        Refresh()
     }
 
-    func Refresh()
-    {
+    func Refresh() {
         let data = ReadFile(fileURL: fileURL)
-        let parse = getDictionary(data: data)
+        let parse = GetDictionary(data: data)
+        if parse.count != 1 {
+            let decrypted = DecryptAES256(key: pass, iv: IV, data: parse[1].value)!
+            self.codes = GetDictionary(data: decrypted.data(using: String.Encoding.utf8)!)
+        }
     }
+
 
 }
