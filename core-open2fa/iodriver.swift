@@ -8,10 +8,10 @@
 
 import Foundation
 
-func ReadFile(fileURL: URL) -> Data
+func ReadFile(fileURL: URL) -> String
 {
     let textOutput = try! String(contentsOf: fileURL, encoding: .utf8)
-    return textOutput.data(using: .utf8, allowLossyConversion: false)!
+    return textOutput //.data(using: .utf8, allowLossyConversion: false)!
 }
 
 func SaveFile(fileURL: URL, text: String)
@@ -37,10 +37,10 @@ func Setup(fileURL: URL)
         catch { print(error) } //TODO Update with error types
 
         let IV = getIV()
-        SaveFile(fileURL: fileURL, text: """
-                                         { 
-                                         \"_IV\": \"\(IV)\" 
-                                         } 
-                                         """ )
+        let text = """
+                   <core-open2fa file>:DO NOT EDIT MANUALLY
+                   IV:\(IV)
+                   """
+        SaveFile(fileURL: fileURL, text: text )
     }
 }

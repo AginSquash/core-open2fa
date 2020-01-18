@@ -11,7 +11,6 @@
 		CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
 		DDC8DBF7C2D60078F87BBF44 /* libPods-core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */; };
 		E798F187636E32CC1C180DA7 /* crypt_handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */; };
-		E798F4771837DDFA38E805AD /* XMLdriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F6E3C1B41E06DBB2C8DA /* XMLdriver.swift */; };
 		E798F7DD4D556410882824E3 /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F2D2B82FCAC6182B8914 /* FileHandler.swift */; };
 		E798FDAC33CEF6F1BAA106B1 /* core-open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F5270960E37801C8EED2 /* core-open2fa.swift */; };
 /* End PBXBuildFile section */
@@ -38,7 +37,6 @@
 		E798F2D2B82FCAC6182B8914 /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
 		E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = crypt_handler.swift; sourceTree = "<group>"; };
 		E798F5270960E37801C8EED2 /* core-open2fa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "core-open2fa.swift"; sourceTree = "<group>"; };
-		E798F6E3C1B41E06DBB2C8DA /* XMLdriver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLdriver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +94,6 @@
 				E798F2D2B82FCAC6182B8914 /* FileHandler.swift */,
 				E798F5270960E37801C8EED2 /* core-open2fa.swift */,
 				E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */,
-				E798F6E3C1B41E06DBB2C8DA /* XMLdriver.swift */,
 			);
 			path = "core-open2fa";
 			sourceTree = "<group>";
@@ -190,7 +187,6 @@
 				E798F7DD4D556410882824E3 /* FileHandler.swift in Sources */,
 				E798FDAC33CEF6F1BAA106B1 /* core-open2fa.swift in Sources */,
 				E798F187636E32CC1C180DA7 /* crypt_handler.swift in Sources */,
-				E798F4771837DDFA38E805AD /* XMLdriver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

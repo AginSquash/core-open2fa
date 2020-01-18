@@ -35,19 +35,22 @@ class core_open2fa
         Setup(fileURL: fileURL)
 
         let data = ReadFile(fileURL: fileURL)
-        let dict = GetDictionary(data: data)
-        self.IV = dict[0].value
+        //let dict = GetDictionary(data: data)
+        //self.IV = dict[0].value
 
-        Refresh()
+        //Refresh()
+        let parsed = ParseStringToDict(string: data)
+        print(parsed)
     }
 
     func Refresh() {
+        /*
         let data = ReadFile(fileURL: fileURL)
         let parse = GetDictionary(data: data)
         if parse.count != 1 {
             let decrypted = DecryptAES256(key: pass, iv: IV, data: parse[1].value)!
             self.codes = GetDictionary(data: decrypted.data(using: String.Encoding.utf8)!)
-        }
+        } */
     }
 
     func AddCode(service_name: String, code: String) -> FUNC_RESULT
