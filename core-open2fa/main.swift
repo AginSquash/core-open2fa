@@ -12,6 +12,5 @@ import SwiftyJSON
 let fileName = "totp.enc"
 let fileURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Documents/.cl-swift-totp/\(fileName)")
 
-print( getIV() )
 
-Setup(fileURL: fileURL)
+let o2fa = core_open2fa(fileURL: fileURL, password: "pass")
