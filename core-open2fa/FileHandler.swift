@@ -11,8 +11,12 @@ func ParseCustom(str: String, element: String.Element) -> (key: String, value: S
     var index = str.firstIndex(of: ":")!
     let key = String( str[..<index] )
     index = str.index(after: index)
-    let endIndex = str.index(of: element)!
-    return (key: key, value: String(str[index..<endIndex]) )
+    if let endIndex = str.index(of: element)
+    {
+        return (key: key, value: String(str[index..<endIndex]) )
+    } else {
+        return (key: key, value: String(str[index...]) )
+    }
 }
 
 func ParseStringToDict(string: String) -> Dictionary<String, String>
@@ -28,7 +32,7 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
         dict[tuple.key] = tuple.value
     }
 
-    let tuple = ParseCustom(str: parsingString, element: "\0")
+    let tuple = ParseCustom(str: parsingString, element: "\0") // Null is not supporting(?)
     dict[tuple.key] = tuple.value
 
     return dict
