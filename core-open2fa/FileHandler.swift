@@ -6,6 +6,14 @@
 import Foundation
 import SwiftyJSON
 
+func ParseCustom(str: String, element: String.Element) -> (key: String, value: String)
+{
+    var index = str.firstIndex(of: ":")!
+    let key = String( str[..<index] )
+    index = str.index(after: index)
+    let endIndex = str.index(of: element)!
+    return (key: key, value: String(str[index..<endIndex]) )
+}
 
 func ParseStringToDict(string: String) -> Dictionary<String, String>
 {
@@ -14,19 +22,14 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
     while parsingString.index(of: "\n") != nil
     {
         let range = parsingString.startIndex...parsingString.index(of: "\n")!
-        let substr = parsingString[ range ]
+        let sub = parsingString[ range ]
         parsingString.removeSubrange(range)
-        var index = substr.firstIndex(of: ":")!
-        let key = String( substr[..<index] )
-        index = substr.index(after: index)
-        let endIndex = substr.index(of: "\n")!
-        dict[key] = String( substr[index..<endIndex] )
+        let tuple = ParseCustom(str: String(sub), element: "\n")
+        dict[tuple.key] = tuple.value
     }
 
-    var index = parsingString.firstIndex(of: ":")!
-    let key = String( parsingString[..<index] )
-    index = parsingString.index(after: index)
-    dict[key] = String( parsingString[index...] )
+    let tuple = ParseCustom(str: parsingString, element: "\0")
+    dict[tuple.key] = tuple.value
 
     return dict
 }

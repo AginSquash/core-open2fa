@@ -38,7 +38,7 @@ func Setup(fileURL: URL)
 
         let IV = getIV()
         let text = """
-                   <core-open2fa file>:DO NOT EDIT MANUALLY
+                   <core-open2fa-file>:2
                    IV:\(IV)
                    """
         SaveFile(fileURL: fileURL, text: text )
