@@ -35,12 +35,11 @@ class core_open2fa
         Setup(fileURL: fileURL)
 
         let data = ReadFile(fileURL: fileURL)
-        //let dict = GetDictionary(data: data)
-        //self.IV = dict[0].value
-
-        //Refresh()
-        let parsed = ParseStringToDict(string: data)
-        print(parsed)
+        let IV_dict = ParseStringToDict(string: data)
+        if let iv = IV_dict["IV"]
+        {
+            self.IV = iv
+        } else { exit(1) }
     }
 
     func Refresh() {
@@ -55,15 +54,32 @@ class core_open2fa
 
     func AddCode(service_name: String, code: String) -> FUNC_RESULT
     {
-        codes.append( (key: service_name, value: code) )
-
-        var collection = String()
-        for code in 0..<codes.count
-        {
-            collection += codes[code].key + ":" + codes[code].value + "\n" //TODO Encrypt
+        for element in codes {
+            if ( element.key == service_name )
+            {
+                return .ALREADY_EXIST
+            }
         }
-
+        codes.append( (key: service_name, value: code) )
+        codes = RegularizeDictionary(dict: codes)
+        SaveArray(array: codes)
         return .SUCCEFULL
     }
 
+    private func SaveArray(array: Array<(key: String, value: String)>) -> FUNC_RESULT {
+        var collection = String()
+        for code in 0..<codes.count {
+            collection += codes[code].key + ":" + codes[code].value + "\n" //TODO Encrypt
+        }
+        collection.remove(at: collection.index(before: collection.endIndex) )
+        if let chyper = CryptAES256(key: self.pass, iv: self.IV, data: collection)
+        {
+            let saveString = CreateSavedFile(IV: self.IV, codes_ENCRYPTED: chyper)
+            SaveFile(fileURL: self.fileURL, text: saveString)
+        } else {
+            print("core-open2fa.swift, str: 75") 
+            exit(1)
+        }
+        return .SUCCEFULL
+    }
 }

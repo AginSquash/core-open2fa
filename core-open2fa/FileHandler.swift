@@ -6,7 +6,7 @@
 import Foundation
 import SwiftyJSON
 
-func ParseCustom(str: String, element: String.Element) -> (key: String, value: String)
+private func ParseCustom(str: String, element: String.Element) -> (key: String, value: String)
 {
     var index = str.firstIndex(of: ":")!
     let key = String( str[..<index] )
@@ -38,7 +38,22 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
     return dict
 }
 
+func CreateSavedFile(IV: String, codes_ENCRYPTED: String) -> String
+{
+    var stringToSave = """
+                       IV:\(IV)
+                       codes:\(codes_ENCRYPTED)
+                       """
+    return stringToSave
+}
+
 func RegularizeDictionary(dict: Dictionary<String, String>) -> Array<(key: String, value: String)>
+{
+    let array = dict.sorted(by: { $0.0 < $1.0 })
+    return array
+}
+
+func RegularizeDictionary(dict: Array<(key: String, value: String)>) -> Array<(key: String, value: String)>
 {
     let array = dict.sorted(by: { $0.0 < $1.0 })
     return array
