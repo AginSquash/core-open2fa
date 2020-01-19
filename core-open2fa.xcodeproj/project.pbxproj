@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54129E8F8B8F19B8ED2FA9D1 /* libPods-Test_core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAE494A1654A450906FE4CF /* libPods-Test_core-open2fa.a */; };
+		B7C8E1DC006FFEC8E13037CE /* libPods-core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0278BE465EFA32A8B0877C3F /* libPods-core-open2fa.a */; };
 		CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */; };
 		CDBCA36B23D2784700D979D1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA36A23D2784700D979D1 /* main.swift */; };
 		CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
@@ -34,8 +36,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-core-open2fa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0278BE465EFA32A8B0877C3F /* libPods-core-open2fa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-core-open2fa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C11B51FDA32C87064F6B3AB /* Pods-Test_core-open2fa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test_core-open2fa.debug.xcconfig"; path = "Target Support Files/Pods-Test_core-open2fa/Pods-Test_core-open2fa.debug.xcconfig"; sourceTree = "<group>"; };
+		7C7DFA0F2A815D2902066352 /* Pods-Test_core-open2fa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test_core-open2fa.release.xcconfig"; path = "Target Support Files/Pods-Test_core-open2fa/Pods-Test_core-open2fa.release.xcconfig"; sourceTree = "<group>"; };
 		9E680060655661EEA3729876 /* Pods-core-open2fa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-core-open2fa.debug.xcconfig"; path = "Target Support Files/Pods-core-open2fa/Pods-core-open2fa.debug.xcconfig"; sourceTree = "<group>"; };
+		AEAE494A1654A450906FE4CF /* libPods-Test_core-open2fa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Test_core-open2fa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC54A42CEE6E2FF4385E62E2 /* Pods-core-open2fa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-core-open2fa.release.xcconfig"; path = "Target Support Files/Pods-core-open2fa/Pods-core-open2fa.release.xcconfig"; sourceTree = "<group>"; };
 		CD86304C23D49822008A9C7D /* Test_core-open2fa.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test_core-open2fa.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_core_open2fa.swift; sourceTree = "<group>"; };
@@ -53,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54129E8F8B8F19B8ED2FA9D1 /* libPods-Test_core-open2fa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDC8DBF7C2D60078F87BBF44 /* libPods-core-open2fa.a in Frameworks */,
+				B7C8E1DC006FFEC8E13037CE /* libPods-core-open2fa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +77,8 @@
 		71B40F263DA06BEA7263ED78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */,
+				AEAE494A1654A450906FE4CF /* libPods-Test_core-open2fa.a */,
+				0278BE465EFA32A8B0877C3F /* libPods-core-open2fa.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,6 +88,8 @@
 			children = (
 				9E680060655661EEA3729876 /* Pods-core-open2fa.debug.xcconfig */,
 				BC54A42CEE6E2FF4385E62E2 /* Pods-core-open2fa.release.xcconfig */,
+				7C11B51FDA32C87064F6B3AB /* Pods-Test_core-open2fa.debug.xcconfig */,
+				7C7DFA0F2A815D2902066352 /* Pods-Test_core-open2fa.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -132,6 +142,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD86305323D49822008A9C7D /* Build configuration list for PBXNativeTarget "Test_core-open2fa" */;
 			buildPhases = (
+				BC776CE60B3F2FC89DA0B6CE /* [CP] Check Pods Manifest.lock */,
 				CD86304823D49822008A9C7D /* Sources */,
 				CD86304923D49822008A9C7D /* Frameworks */,
 				CD86304A23D49822008A9C7D /* Resources */,
@@ -233,6 +244,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BC776CE60B3F2FC89DA0B6CE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Test_core-open2fa-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -240,11 +273,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDC9F61123D49A0B0078AB1A /* crypt_handler.swift in Sources */,
 				CDC9F60D23D49A0B0078AB1A /* iodriver.swift in Sources */,
 				CDC9F60E23D49A0B0078AB1A /* main.swift in Sources */,
 				CDC9F60F23D49A0B0078AB1A /* FileHandler.swift in Sources */,
 				CDC9F61023D49A0B0078AB1A /* core-open2fa.swift in Sources */,
-				CDC9F61123D49A0B0078AB1A /* crypt_handler.swift in Sources */,
 				CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +299,7 @@
 /* Begin XCBuildConfiguration section */
 		CD86305123D49822008A9C7D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C11B51FDA32C87064F6B3AB /* Pods-Test_core-open2fa.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -283,6 +317,7 @@
 		};
 		CD86305223D49822008A9C7D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C7DFA0F2A815D2902066352 /* Pods-Test_core-open2fa.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
