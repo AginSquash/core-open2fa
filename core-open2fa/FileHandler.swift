@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 private func ParseCustom(str: String, element: String.Element) -> (key: String, value: String)
 {

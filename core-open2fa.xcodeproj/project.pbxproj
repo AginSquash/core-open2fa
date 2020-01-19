@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */; };
 		CDBCA36B23D2784700D979D1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA36A23D2784700D979D1 /* main.swift */; };
 		CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
 		DDC8DBF7C2D60078F87BBF44 /* libPods-core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */; };
@@ -31,6 +32,9 @@
 		6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-core-open2fa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E680060655661EEA3729876 /* Pods-core-open2fa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-core-open2fa.debug.xcconfig"; path = "Target Support Files/Pods-core-open2fa/Pods-core-open2fa.debug.xcconfig"; sourceTree = "<group>"; };
 		BC54A42CEE6E2FF4385E62E2 /* Pods-core-open2fa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-core-open2fa.release.xcconfig"; path = "Target Support Files/Pods-core-open2fa/Pods-core-open2fa.release.xcconfig"; sourceTree = "<group>"; };
+		CD86304C23D49822008A9C7D /* Test_core-open2fa.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test_core-open2fa.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_core_open2fa.swift; sourceTree = "<group>"; };
+		CD86305023D49822008A9C7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CDBCA36723D2784700D979D1 /* core-open2fa */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "core-open2fa"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDBCA36A23D2784700D979D1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CDBCA37123D27B3200D979D1 /* iodriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iodriver.swift; sourceTree = "<group>"; };
@@ -40,6 +44,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CD86304923D49822008A9C7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDBCA36423D2784700D979D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -68,10 +79,20 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CD86304D23D49822008A9C7D /* Test_core-open2fa */ = {
+			isa = PBXGroup;
+			children = (
+				CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */,
+				CD86305023D49822008A9C7D /* Info.plist */,
+			);
+			path = "Test_core-open2fa";
+			sourceTree = "<group>";
+		};
 		CDBCA35E23D2784700D979D1 = {
 			isa = PBXGroup;
 			children = (
 				CDBCA36923D2784700D979D1 /* core-open2fa */,
+				CD86304D23D49822008A9C7D /* Test_core-open2fa */,
 				CDBCA36823D2784700D979D1 /* Products */,
 				7C3DCC0F970BFA5A5CE1AFCF /* Pods */,
 				71B40F263DA06BEA7263ED78 /* Frameworks */,
@@ -82,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				CDBCA36723D2784700D979D1 /* core-open2fa */,
+				CD86304C23D49822008A9C7D /* Test_core-open2fa.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,6 +123,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		CD86304B23D49822008A9C7D /* Test_core-open2fa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD86305323D49822008A9C7D /* Build configuration list for PBXNativeTarget "Test_core-open2fa" */;
+			buildPhases = (
+				CD86304823D49822008A9C7D /* Sources */,
+				CD86304923D49822008A9C7D /* Frameworks */,
+				CD86304A23D49822008A9C7D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Test_core-open2fa";
+			productName = "Test_core-open2fa";
+			productReference = CD86304C23D49822008A9C7D /* Test_core-open2fa.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		CDBCA36623D2784700D979D1 /* core-open2fa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDBCA36E23D2784700D979D1 /* Build configuration list for PBXNativeTarget "core-open2fa" */;
@@ -129,6 +168,9 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Vlad Vrublevsky";
 				TargetAttributes = {
+					CD86304B23D49822008A9C7D = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					CDBCA36623D2784700D979D1 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -148,9 +190,20 @@
 			projectRoot = "";
 			targets = (
 				CDBCA36623D2784700D979D1 /* core-open2fa */,
+				CD86304B23D49822008A9C7D /* Test_core-open2fa */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CD86304A23D49822008A9C7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		AF00FA17BDFC210D8BA38E2A /* [CP] Check Pods Manifest.lock */ = {
@@ -178,6 +231,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CD86304823D49822008A9C7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDBCA36323D2784700D979D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -193,6 +254,40 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		CD86305123D49822008A9C7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Test_core-open2fa/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.agins.Test-core-open2fa";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CD86305223D49822008A9C7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Test_core-open2fa/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.agins.Test-core-open2fa";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		CDBCA36C23D2784700D979D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -329,6 +424,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CD86305323D49822008A9C7D /* Build configuration list for PBXNativeTarget "Test_core-open2fa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD86305123D49822008A9C7D /* Debug */,
+				CD86305223D49822008A9C7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CDBCA36223D2784700D979D1 /* Build configuration list for PBXProject "core-open2fa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

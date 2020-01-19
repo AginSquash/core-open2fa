@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 enum FUNC_RESULT
 {
