@@ -69,15 +69,17 @@ class core_open2fa
         codes.append( (key: service_name, value: code) )
         codes = RegularizeDictionary(dict: codes)
         SaveArray(array: codes)
+
+        Refresh()
         return .SUCCEFULL
     }
 
     private func SaveArray(array: Array<(key: String, value: String)>) -> FUNC_RESULT {
         var collection = String()
         for code in 0..<codes.count {
-            collection += codes[code].key + ":" + codes[code].value + "\n" //TODO Encrypt
+            collection += codes[code].key + ":" + codes[code].value + "\n" 
         }
-        collection.remove(at: collection.index(before: collection.endIndex) )
+        collection.remove(at: collection.index(before: collection.endIndex) ) //TODO We delete last \n to save supporting by ParseCustom func
         if let chyper = CryptAES256(key: self.pass, iv: self.IV, data: collection)
         {
             let saveString = CreateSavedFile(IV: self.IV, codes_ENCRYPTED: chyper)
