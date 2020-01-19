@@ -34,6 +34,7 @@ class core_open2fa
         Setup(fileURL: fileURL)
 
         Refresh()
+        //DEBUG
         print(self.codes)
     }
 
@@ -85,7 +86,7 @@ class core_open2fa
             let saveString = CreateSavedFile(IV: self.IV, codes_ENCRYPTED: chyper)
             SaveFile(fileURL: self.fileURL, text: saveString)
         } else {
-            print("core-open2fa.swift, str: 75") 
+            print("core-open2fa.swift, (1)") 
             exit(1)
         }
         return .SUCCEFULL
