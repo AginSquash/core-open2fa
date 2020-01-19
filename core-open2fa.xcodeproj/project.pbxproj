@@ -17,6 +17,7 @@
 		CDC9F60F23D49A0B0078AB1A /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F2D2B82FCAC6182B8914 /* FileHandler.swift */; };
 		CDC9F61023D49A0B0078AB1A /* core-open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F5270960E37801C8EED2 /* core-open2fa.swift */; };
 		CDC9F61123D49A0B0078AB1A /* cryptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F34BF3CD4E1EA3734C22 /* cryptHandler.swift */; };
+		E798F15FFEDF4EE3C76155E5 /* OTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798FE39D41E7CF99A39F52E /* OTPHandler.swift */; };
 		E798F187636E32CC1C180DA7 /* cryptHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F34BF3CD4E1EA3734C22 /* cryptHandler.swift */; };
 		E798F7DD4D556410882824E3 /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F2D2B82FCAC6182B8914 /* FileHandler.swift */; };
 		E798FDAC33CEF6F1BAA106B1 /* core-open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F5270960E37801C8EED2 /* core-open2fa.swift */; };
@@ -50,6 +51,7 @@
 		E798F2D2B82FCAC6182B8914 /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
 		E798F34BF3CD4E1EA3734C22 /* cryptHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cryptHandler.swift; sourceTree = "<group>"; };
 		E798F5270960E37801C8EED2 /* core-open2fa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "core-open2fa.swift"; sourceTree = "<group>"; };
+		E798FE39D41E7CF99A39F52E /* OTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				E798F2D2B82FCAC6182B8914 /* FileHandler.swift */,
 				E798F5270960E37801C8EED2 /* core-open2fa.swift */,
 				E798F34BF3CD4E1EA3734C22 /* cryptHandler.swift */,
+				E798FE39D41E7CF99A39F52E /* OTPHandler.swift */,
 			);
 			path = "core-open2fa";
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				E798F7DD4D556410882824E3 /* FileHandler.swift in Sources */,
 				E798FDAC33CEF6F1BAA106B1 /* core-open2fa.swift in Sources */,
 				E798F187636E32CC1C180DA7 /* cryptHandler.swift in Sources */,
+				E798F15FFEDF4EE3C76155E5 /* OTPHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

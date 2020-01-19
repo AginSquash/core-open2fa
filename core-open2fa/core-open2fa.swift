@@ -34,8 +34,6 @@ class core_open2fa
         Setup(fileURL: fileURL)
 
         Refresh()
-        //DEBUG
-        print(self.codes)
     }
 
     func Refresh() {
@@ -59,6 +57,15 @@ class core_open2fa
         }
     }
 
+    func getListOTP() -> Array<(name: String, code: String)>
+    {
+        var array = Array<(name: String, code: String)>()
+        for code in codes{
+           array.append( (name: code.key, code: getOTP(code: code.value)) )
+        }
+        return array
+    }
+
     func AddCode(service_name: String, code: String) -> FUNC_RESULT
     {
         for element in codes {
@@ -75,6 +82,20 @@ class core_open2fa
         return .SUCCEFULL
     }
 
+    func DeleteCode(name: String) -> FUNC_RESULT
+    {
+
+        for code in 0..<codes.count{
+            if codes[code].key == name
+            {
+                codes.remove(at: code)
+                SaveArray(array: codes)
+                return .SUCCEFULL
+            }
+        }
+        return .CODE_NOT_EXIST
+    }
+
     private func SaveArray(array: Array<(key: String, value: String)>) -> FUNC_RESULT {
         var collection = String()
         for code in 0..<codes.count {
@@ -89,6 +110,7 @@ class core_open2fa
             print("core-open2fa.swift, (1)") 
             exit(1)
         }
+        Refresh()
         return .SUCCEFULL
     }
 }
