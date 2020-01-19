@@ -10,6 +10,11 @@
 		CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */; };
 		CDBCA36B23D2784700D979D1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA36A23D2784700D979D1 /* main.swift */; };
 		CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
+		CDC9F60D23D49A0B0078AB1A /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
+		CDC9F60E23D49A0B0078AB1A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA36A23D2784700D979D1 /* main.swift */; };
+		CDC9F60F23D49A0B0078AB1A /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F2D2B82FCAC6182B8914 /* FileHandler.swift */; };
+		CDC9F61023D49A0B0078AB1A /* core-open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F5270960E37801C8EED2 /* core-open2fa.swift */; };
+		CDC9F61123D49A0B0078AB1A /* crypt_handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */; };
 		DDC8DBF7C2D60078F87BBF44 /* libPods-core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E7E454DD73DDA6922F21481 /* libPods-core-open2fa.a */; };
 		E798F187636E32CC1C180DA7 /* crypt_handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F34BF3CD4E1EA3734C22 /* crypt_handler.swift */; };
 		E798F7DD4D556410882824E3 /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E798F2D2B82FCAC6182B8914 /* FileHandler.swift */; };
@@ -235,6 +240,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDC9F60D23D49A0B0078AB1A /* iodriver.swift in Sources */,
+				CDC9F60E23D49A0B0078AB1A /* main.swift in Sources */,
+				CDC9F60F23D49A0B0078AB1A /* FileHandler.swift in Sources */,
+				CDC9F61023D49A0B0078AB1A /* core-open2fa.swift in Sources */,
+				CDC9F61123D49A0B0078AB1A /* crypt_handler.swift in Sources */,
 				CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
