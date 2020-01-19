@@ -17,5 +17,5 @@ func getOTP(code: String) -> String
             return otpString!
         }
     }
-    return "Error"
+    return "Code incorrect"
 }

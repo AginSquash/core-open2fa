@@ -6,17 +6,19 @@
 import Foundation
 
 
-private func ParseCustom(str: String, element: String.Element) -> (key: String, value: String)
+private func ParseCustom(str: String, element: String.Element) -> (key: String, value: String)?
 {
-    var index = str.firstIndex(of: ":")!
-    let key = String( str[..<index] )
-    index = str.index(after: index)
-    if let endIndex = str.index(of: element)
+    if var index = str.firstIndex(of: ":")
     {
-        return (key: key, value: String(str[index..<endIndex]) )
-    } else {
-        return (key: key, value: String(str[index...]) )
-    }
+        let key = String( str[..<index] )
+        index = str.index(after: index)
+        if let endIndex = str.index(of: element)
+        {
+            return (key: key, value: String(str[index..<endIndex]) )
+        } else {
+            return (key: key, value: String(str[index...]) )
+        }
+    } else { return nil }
 }
 
 func ParseStringToDict(string: String) -> Dictionary<String, String>
@@ -28,12 +30,15 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
         let range = parsingString.startIndex...parsingString.index(of: "\n")!
         let sub = parsingString[ range ]
         parsingString.removeSubrange(range)
-        let tuple = ParseCustom(str: String(sub), element: "\n")
-        dict[tuple.key] = tuple.value
+        if let tuple = ParseCustom(str: String(sub), element: "\n") {
+            dict[tuple.key] = tuple.value
+        }
     }
 
-    let tuple = ParseCustom(str: parsingString, element: "\0") // Null is not supporting(?)
-    dict[tuple.key] = tuple.value
+    if let tuple = ParseCustom(str: parsingString, element: "\0") // Null is not supporting(?)
+    {
+        dict[tuple.key] = tuple.value
+    }
 
     return dict
 }

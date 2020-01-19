@@ -17,5 +17,6 @@ o2fa.DeleteCode(name: "Test")
 o2fa.AddCode(service_name: "Test", code: "codeee4")
 o2fa.AddCode(service_name: "Test2", code: "codeee2")
 o2fa.AddCode(service_name: "Test4", code: "")
+o2fa.AddCode(service_name: "Test5", code: "")
 
 print( o2fa.getListOTP() )
