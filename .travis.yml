@@ -1,0 +1,8 @@
+language: swift
+os: osx
+osx_image: xcode11
+install:
+    - pod install
+xcode_workspace: core-open2fa.xcworkspace
+xcode_scheme: core-open2fa
+xcode_destination: platform=macOS
