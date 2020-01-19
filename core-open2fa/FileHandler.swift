@@ -38,21 +38,8 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
     return dict
 }
 
-func GetDictionary(data: Data) -> Array<(key: String, value: String)>
+func RegularizeDictionary(dict: Dictionary<String, String>) -> Array<(key: String, value: String)>
 {
-    do {
-        let json = try JSON(data: data)
-        var dict = [String : String]()
-        for (key_JSON, subJson): (String, JSON) in json {
-            /*if let code = subJson["code"].string {
-                dict[ key_JSON ] = code
-            } */
-            dict[ key_JSON ] = subJson.string
-        }
-        let sortedDictionary = dict.sorted(by: { $0.0 < $1.0 })
-        return sortedDictionary
-    } catch {
-        print(error)
-        exit(1)
-    }
+    let array = dict.sorted(by: { $0.0 < $1.0 })
+    return array
 }
