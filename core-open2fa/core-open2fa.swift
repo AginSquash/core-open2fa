@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import KeychainAccess
 
 enum FUNC_RESULT
 {
@@ -28,6 +29,21 @@ class core_open2fa
 
     init(fileURL: URL, password: String)
     {
+        
+        let keychain = Keychain(service: "com.core-open2fa.userpass")
+
+        DispatchQueue.global().async {
+            do {
+                let password = try keychain
+                        .authenticationPrompt("Authenticate to login to server")
+                        .get("kishikawakatsumi")
+
+                print("password: \(password)")
+            } catch let error {
+                // Error handling if needed...
+            }
+        }
+
         self.fileURL = fileURL
         self.pass = password
 
