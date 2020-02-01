@@ -16,21 +16,6 @@ class core_open2fa
 
     init(fileURL: URL, password: String)
     {
-        
-        let keychain = Keychain(service: "com.core-open2fa.userpass")
-
-        DispatchQueue.global().async {
-            do {
-                let password = try keychain
-                        .authenticationPrompt("Authenticate to login to server")
-                        .get("kishikawakatsumi")
-
-                print("password: \(password)")
-            } catch let error {
-                // Error handling if needed...
-            }
-        }
-
         self.fileURL = fileURL
         self.pass = password
 
@@ -105,7 +90,7 @@ class core_open2fa
         for code in 0..<codes.count {
             collection += codes[code].key + ":" + codes[code].value + "\n" 
         }
-        //TESTME collection.remove(at: collection.index(before: collection.endIndex) ) TODO We delete last \n to save supporting by ParseCustom func
+        //TESTME collection.remove(at: collection.index(before: collection.endIndex) ) We delete last \n to save supporting by ParseCustom func
         if let chyper = CryptAES256(key: self.pass, iv: self.IV, data: collection)
         {
             let saveString = CreateSavedFile(IV: self.IV, codes_ENCRYPTED: chyper)
@@ -116,5 +101,10 @@ class core_open2fa
         }
         Refresh()
         return .SUCCEFULL
+    }
+
+    func ParseFuncCode()
+    {
+        //Prototype
     }
 }
