@@ -20,4 +20,5 @@ enum FUNC_RESULT
     case ERROR_ON_CATCH
     case CANNOT_SAVE_FILE
     case CANNOT_CREATE_DIRECTORY
+    case CHYPER_IS_NIL
 }

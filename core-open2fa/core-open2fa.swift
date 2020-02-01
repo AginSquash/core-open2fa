@@ -111,7 +111,7 @@ class core_open2fa
             let saveString = CreateSavedFile(IV: self.IV, codes_ENCRYPTED: chyper)
             SaveFile(fileURL: self.fileURL, text: saveString)
         } else {
-            print("core-open2fa.swift, (1)") 
+            return .CHYPER_IS_NIL
             exit(1)
         }
         Refresh()
