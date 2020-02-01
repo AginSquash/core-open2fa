@@ -6,19 +6,6 @@
 import Foundation
 import KeychainAccess
 
-enum FUNC_RESULT
-{
-    case SUCCEFULL
-
-    //ERROR TYPE
-    case ALREADY_EXIST
-    case FILE_NOT_EXIST
-    case FILE_UNVIABLE
-    case CODE_NOT_EXIST
-
-    case ERROR_ON_CATCH
-}
-
 class core_open2fa
 {
     private var IV = String()
@@ -52,7 +39,7 @@ class core_open2fa
         Refresh()
     }
 
-    func Refresh() {
+    func Refresh() -> FUNC_RESULT {
         let data = ReadFile(fileURL: fileURL)
         let refresh_dict = ParseStringToDict(string: data)
         if let iv = refresh_dict["IV"]
@@ -65,12 +52,13 @@ class core_open2fa
                 let codes_dict = ParseStringToDict(string: decrypted)
                 self.codes = RegularizeDictionary(dict: codes_dict)
             } else {
-                print("Password incorrect")
+                return .PASS_INCORRECT
                 exit(1)
             }
         } else {
-            print("Haven't any code")
+            return .NO_CODES
         }
+        return .SUCCEFULL
     }
 
     func getListOTP() -> Array<(name: String, code: String)>
@@ -109,7 +97,7 @@ class core_open2fa
                 return .SUCCEFULL
             }
         }
-        return .CODE_NOT_EXIST
+        return .KEY2FA_NOT_EXIST
     }
 
     private func SaveArray(array: Array<(key: String, value: String)>) -> FUNC_RESULT {
