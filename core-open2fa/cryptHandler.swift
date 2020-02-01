@@ -33,8 +33,7 @@ func DecryptAES256(key: String, iv: String, data: String) -> String?
         let textUint8 = try aes.decrypt( stringToBytes(data)! )
         let text = String(bytes: textUint8, encoding: .utf8)
         return text
-    } catch { print(error) }
-    return nil
+    } catch { return nil }
 }
 
 func stringToBytes(_ string: String) -> [UInt8]? {

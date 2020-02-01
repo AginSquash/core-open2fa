@@ -18,4 +18,6 @@ enum FUNC_RESULT
     case KEY2FA_INCORRECT
     case NO_CODES
     case ERROR_ON_CATCH
+    case CANNOT_SAVE_FILE
+    case CANNOT_CREATE_DIRECTORY
 }
