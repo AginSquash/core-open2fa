@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		54129E8F8B8F19B8ED2FA9D1 /* libPods-Test_core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAE494A1654A450906FE4CF /* libPods-Test_core-open2fa.a */; };
 		B7C8E1DC006FFEC8E13037CE /* libPods-core-open2fa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0278BE465EFA32A8B0877C3F /* libPods-core-open2fa.a */; };
-		CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */; };
 		CDBCA36B23D2784700D979D1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA36A23D2784700D979D1 /* main.swift */; };
 		CDBCA37223D27B3200D979D1 /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
 		CDC9F60D23D49A0B0078AB1A /* iodriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBCA37123D27B3200D979D1 /* iodriver.swift */; };
@@ -44,8 +43,6 @@
 		AEAE494A1654A450906FE4CF /* libPods-Test_core-open2fa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Test_core-open2fa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC54A42CEE6E2FF4385E62E2 /* Pods-core-open2fa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-core-open2fa.release.xcconfig"; path = "Target Support Files/Pods-core-open2fa/Pods-core-open2fa.release.xcconfig"; sourceTree = "<group>"; };
 		CD86304C23D49822008A9C7D /* Test_core-open2fa.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test_core-open2fa.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_core_open2fa.swift; sourceTree = "<group>"; };
-		CD86305023D49822008A9C7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CDBCA36723D2784700D979D1 /* core-open2fa */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "core-open2fa"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDBCA36A23D2784700D979D1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CDBCA37123D27B3200D979D1 /* iodriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iodriver.swift; sourceTree = "<group>"; };
@@ -96,20 +93,10 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		CD86304D23D49822008A9C7D /* Test_core-open2fa */ = {
-			isa = PBXGroup;
-			children = (
-				CD86304E23D49822008A9C7D /* Test_core_open2fa.swift */,
-				CD86305023D49822008A9C7D /* Info.plist */,
-			);
-			path = "Test_core-open2fa";
-			sourceTree = "<group>";
-		};
 		CDBCA35E23D2784700D979D1 = {
 			isa = PBXGroup;
 			children = (
 				CDBCA36923D2784700D979D1 /* core-open2fa */,
-				CD86304D23D49822008A9C7D /* Test_core-open2fa */,
 				CDBCA36823D2784700D979D1 /* Products */,
 				7C3DCC0F970BFA5A5CE1AFCF /* Pods */,
 				71B40F263DA06BEA7263ED78 /* Frameworks */,
@@ -282,7 +269,6 @@
 				CDC9F60E23D49A0B0078AB1A /* main.swift in Sources */,
 				CDC9F60F23D49A0B0078AB1A /* FileHandler.swift in Sources */,
 				CDC9F61023D49A0B0078AB1A /* core-open2fa.swift in Sources */,
-				CD86304F23D49822008A9C7D /* Test_core_open2fa.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
