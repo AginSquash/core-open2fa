@@ -1,4 +1,5 @@
-Podfile.lock
-Pods
-*.xcworkspace
-.idea/
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/

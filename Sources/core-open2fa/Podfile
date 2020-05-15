@@ -1,0 +1,19 @@
+target "open2fa-UI"
+pod 'SwiftOTP'
+pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
+pod 'KeychainAccess', :git => "https://github.com/kishikawakatsumi/KeychainAccess", :branch => "master"
+
+target 'open2fa-UITests' do
+    inherit! :search_paths
+    pod 'SwiftOTP'
+    pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
+    pod 'KeychainAccess', :git => "https://github.com/kishikawakatsumi/KeychainAccess", :branch => "master"
+  end
+
+  target 'open2fa-UIUITests' do
+    inherit! :search_paths
+    pod 'SwiftOTP'
+    pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
+    pod 'KeychainAccess', :git => "https://github.com/kishikawakatsumi/KeychainAccess", :branch => "master"
+  end
+  

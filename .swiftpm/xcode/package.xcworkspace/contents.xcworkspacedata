@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:core-open2fa.xcodeproj">
+      location = "container:../..">
    </FileRef>
 </Workspace>

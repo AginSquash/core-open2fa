@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDBCA36623D2784700D979D1"
+               BlueprintIdentifier = "core-open2fa"
                BuildableName = "core-open2fa"
                BlueprintName = "core-open2fa"
-               ReferencedContainer = "container:core-open2fa.xcodeproj">
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "core-open2faTests"
+               BuildableName = "core-open2faTests"
+               BlueprintName = "core-open2faTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,10 +46,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CD86304B23D49822008A9C7D"
-               BuildableName = "Test_core-open2fa.xctest"
-               BlueprintName = "Test_core-open2fa"
-               ReferencedContainer = "container:core-open2fa.xcodeproj">
+               BlueprintIdentifier = "core-open2faTests"
+               BuildableName = "core-open2faTests"
+               BlueprintName = "core-open2faTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -49,16 +64,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDBCA36623D2784700D979D1"
-            BuildableName = "core-open2fa"
-            BlueprintName = "core-open2fa"
-            ReferencedContainer = "container:core-open2fa.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -69,10 +74,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDBCA36623D2784700D979D1"
+            BlueprintIdentifier = "core-open2fa"
             BuildableName = "core-open2fa"
             BlueprintName = "core-open2fa"
-            ReferencedContainer = "container:core-open2fa.xcodeproj">
+            ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

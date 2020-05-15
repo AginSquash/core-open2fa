@@ -4,13 +4,12 @@
 //
 
 import Foundation
-import KeychainAccess
 
 class core_open2fa
 {
     private var IV = String()
     private var pass = String()
-    private var fileURL = FileManager.default.homeDirectoryForCurrentUser
+    private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
     private var codes = Array<(key: String, value: String)>()
 
@@ -88,7 +87,7 @@ class core_open2fa
     private func SaveArray(array: Array<(key: String, value: String)>) -> FUNC_RESULT {
         var collection = String()
         for code in 0..<codes.count {
-            collection += codes[code].key + ":" + codes[code].value + "\n" 
+            collection += codes[code].key + ":" + codes[code].value + "\n"
         }
         //TESTME collection.remove(at: collection.index(before: collection.endIndex) ) We delete last \n to save supporting by ParseCustom func
         if let chyper = CryptAES256(key: self.pass, iv: self.IV, data: collection)
