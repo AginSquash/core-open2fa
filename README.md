@@ -1,3 +1,3 @@
 # core-open2fa
 
-A description of this package.
+The core of the open implementation (wrapper) of TOTP using AES 256 encryption.
