@@ -8,16 +8,18 @@
 
 import Foundation
 
-func ReadFile(fileURL: URL) -> String
+func ReadFile(fileURL: URL) -> Data?
 {
-    let textOutput = try! String(contentsOf: fileURL, encoding: .utf8)
-    return textOutput //.data(using: .utf8, allowLossyConversion: false)!
+    //let dataOuput = try? Data(contentsOf: fileURL)
+    //let textOutput = try? String(contentsOf: fileURL, encoding: .utf8)
+    return try? Data(contentsOf: fileURL)  //textOutput //.data(using: .utf8, allowLossyConversion: false)!
 }
 
-func SaveFile(fileURL: URL, text: String) -> FUNC_RESULT
+func SaveFile(fileURL: URL, data: Data) -> FUNC_RESULT
 {
     do {
-        try text.write(to: fileURL, atomically: false, encoding: .utf8)
+        try data.write(to: fileURL)
+        //try text.write(to: fileURL, atomically: false, encoding: .utf8)
         return .SUCCEFULL
     }
     catch { return .CANNOT_SAVE_FILE }
@@ -39,10 +41,8 @@ func Setup(fileURL: URL) -> FUNC_RESULT
         catch { return .CANNOT_CREATE_DIRECTORY }
 
         let IV = getIV()
-        let text = """
-                   IV:\(IV)
-                   """
-
-        return ( SaveFile(fileURL: fileURL, text: text) )
+        let cf = codesFile(IV: IV, codes: nil)
+        let data = try! JSONEncoder().encode(cf)
+        return ( SaveFile(fileURL: fileURL, data: data ))
     }
 }

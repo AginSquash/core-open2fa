@@ -11,92 +11,79 @@ class core_open2fa
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
-    private var codes = Array<(key: String, value: String)>()
-
+    private var codes = [codeSecure]()
+    
     init(fileURL: URL, password: String)
     {
         self.fileURL = fileURL
         self.pass = password
 
-        Setup(fileURL: fileURL)
-
-        Refresh()
+        var result = Setup(fileURL: fileURL)
+        print("Setup: \(result)")
+        result = Refresh()
+        print("Refresh: \(result)")
     }
 
     func Refresh() -> FUNC_RESULT {
-        let data = ReadFile(fileURL: fileURL)
-        let refresh_dict = ParseStringToDict(string: data)
-        if let iv = refresh_dict["IV"]
-        {
-            self.IV = iv
-        } else { exit(1) }
-        if let codes = refresh_dict["codes"] {
-            if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes)
-            {
-                let codes_dict = ParseStringToDict(string: decrypted)
-                self.codes = RegularizeDictionary(dict: codes_dict)
-            } else {
-                return .PASS_INCORRECT
-                exit(1)
-            }
-        } else {
-            return .NO_CODES
-        }
-        return .SUCCEFULL
+        let dataReaden = ReadFile(fileURL: fileURL)
+        guard let data = dataReaden else { return .FILE_NOT_EXIST }
+        let CodesFile = try? JSONDecoder().decode(codesFile.self, from: data)
+        guard let cf = CodesFile else { return .FILE_UNVIABLE }
+        
+        self.IV = cf.IV
+        
+        if let codes = cf.codes {
+            if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
+                if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                    self.codes = decoded
+                    return .SUCCEFULL
+                } else { return .CANNOT_DECODE }
+            } else { return .PASS_INCORRECT }
+        } else { return .NO_CODES }
     }
 
-    func getListOTP() -> Array<(name: String, code: String)>
+    func getListOTP() -> [code]
     {
-        var array = Array<(name: String, code: String)>()
-        for code in codes{
-           array.append( (name: code.key, code: getOTP(code: code.value)) )
+        
+        var array = [code]()
+        for c in codes {
+            array.append( code(id: c.id, name: c.name, codeSingle: getOTP(code: c.code)) )
         }
-        return array
+        return array.sorted()
     }
 
     func AddCode(service_name: String, code: String) -> FUNC_RESULT
     {
         for element in codes {
-            if ( element.key == service_name )
+            if ( element.name == service_name )
             {
                 return .ALREADY_EXIST
             }
         }
-        codes.append( (key: service_name, value: code) )
-        codes = RegularizeDictionary(dict: codes)
-        SaveArray(array: codes)
+        codes.append( codeSecure(name: service_name, code: code) )
+        codes.sorted()
+        SaveArray()
 
         Refresh()
         return .SUCCEFULL
     }
 
-    func DeleteCode(name: String) -> FUNC_RESULT
+    func DeleteCode(id: UUID) -> FUNC_RESULT
     {
-
-        for code in 0..<codes.count{
-            if codes[code].key == name
-            {
-                codes.remove(at: code)
-                SaveArray(array: codes)
-                return .SUCCEFULL
-            }
-        }
-        return .KEY2FA_NOT_EXIST
+        self.codes.removeAll(where: { $0.id == id } )
+        SaveArray()
+        return .SUCCEFULL
     }
 
-    private func SaveArray(array: Array<(key: String, value: String)>) -> FUNC_RESULT {
-        var collection = String()
-        for code in 0..<codes.count {
-            collection += codes[code].key + ":" + codes[code].value + "\n"
-        }
-        //TESTME collection.remove(at: collection.index(before: collection.endIndex) ) We delete last \n to save supporting by ParseCustom func
-        if let chyper = CryptAES256(key: self.pass, iv: self.IV, data: collection)
-        {
-            let saveString = CreateSavedFile(IV: self.IV, codes_ENCRYPTED: chyper)
-            SaveFile(fileURL: self.fileURL, text: saveString)
-        } else {
-            return .CHYPER_IS_NIL
-            exit(1)
+    private func SaveArray() -> FUNC_RESULT {
+        
+        if let encoded = try? JSONEncoder().encode(self.codes) {
+            let encrypted = CryptAES256(key: self.pass, iv: self.IV, data: encoded)
+            let dataToWrite = codesFile(IV: self.IV, codes: encrypted)
+            if let encodedFile = try? JSONEncoder().encode(dataToWrite) {
+                SaveFile(fileURL: self.fileURL, data: encodedFile)
+            }
+            
         }
         Refresh()
         return .SUCCEFULL
@@ -104,6 +91,8 @@ class core_open2fa
 
     func ParseFuncCode()
     {
-        //Prototype
+        
     }
 }
+
+

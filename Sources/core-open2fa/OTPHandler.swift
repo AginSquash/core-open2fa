@@ -12,8 +12,8 @@ func getOTP(code: String) -> String
     {
         if let totp = TOTP(secret: data) {
 
-            let time = Date()
-            let otpString = totp.generate(secondsPast1970: Int(time.timeIntervalSince1970) )
+            //let time = Date()
+            let otpString = totp.generate(time: Date()) //secondsPast1970: Int(time.timeIntervalSince1970)
             return otpString!
         }
     }

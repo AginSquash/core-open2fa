@@ -14,25 +14,24 @@ func getIV() -> String
     return pass
 }
 
-func CryptAES256(key: String, iv: String, data: String) -> String?
+func CryptAES256(key: String, iv: String, data: Data) -> Data?
 {
     let key = key.md5()
     do {
-        let aes = try AES(key: key, iv: iv) // aes256
-        let ciphertext = try aes.encrypt(Array(data.utf8))
-        return ciphertext.toHexString()
-    } catch { }
+        let aes = try AES(key: key, iv: iv)
+        let ciphertext = try aes.encrypt([UInt8](data))
+        return  Data(hex: ciphertext.toHexString())
+    } catch { print(error.localizedDescription) }
     return nil
 }
 
-func DecryptAES256(key: String, iv: String, data: String) -> String?
+func DecryptAES256(key: String, iv: String, data: Data) -> Data?
 {
     let key = key.md5()
     do {
         let aes = try AES(key: key, iv: iv) // aes256
-        let textUint8 = try aes.decrypt( stringToBytes(data)! )
-        let text = String(bytes: textUint8, encoding: .utf8)
-        return text
+        let textUint8 = try aes.decrypt( [UInt8](data))
+        return Data(hex: textUint8.toHexString())
     } catch { return nil }
 }
 
