@@ -18,10 +18,8 @@ class core_open2fa
         self.fileURL = fileURL
         self.pass = password
 
-        var result = Setup(fileURL: fileURL)
-        print("Setup: \(result)")
-        result = Refresh()
-        print("Refresh: \(result)")
+        Setup(fileURL: fileURL)
+        Refresh()
     }
 
     func Refresh() -> FUNC_RESULT {
