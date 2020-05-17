@@ -8,12 +8,12 @@
 import Foundation
 
 public struct code: Identifiable, Comparable {
-    let id: UUID
-    let date: Date
-    var name: String
-    var codeSingle: String
+    public let id: UUID
+    public let date: Date
+    public var name: String
+    public var codeSingle: String
     
-    static func < (lhd: code, rhd: code) -> Bool {
+    static public func < (lhd: code, rhd: code) -> Bool {
         lhd.name < rhd.name
     }
 }
