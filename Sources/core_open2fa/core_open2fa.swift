@@ -5,7 +5,7 @@
 
 import Foundation
 
-class CORE_OPEN2FA
+public class CORE_OPEN2FA
 {
     private var IV = String()
     private var pass = String()
