@@ -70,7 +70,7 @@ final class core_open2faTests: XCTestCase {
         ("testTOTP", testTOTP),
         ("testSaveRead", testSaveRead),
         ("testEncryption", testEncryption),
-        ("testCreation",testCreation),
+        ("testCreation", testCreation),
         ("testAddService", testAddService),
         ("testDeleteService", testDeleteService),
     ]

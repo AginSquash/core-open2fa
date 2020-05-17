@@ -45,7 +45,7 @@ class core_open2fa
         
         var array = [code]()
         for c in codes {
-            array.append( code(id: c.id, name: c.name, codeSingle: getOTP(code: c.code)) )
+            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.code)) )
         }
         return array.sorted()
     }
