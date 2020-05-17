@@ -13,7 +13,7 @@ public class CORE_OPEN2FA
 
     private var codes = [codeSecure]()
     
-    init(fileURL: URL, password: String)
+    public init(fileURL: URL, password: String)
     {
         self.fileURL = fileURL
         self.pass = password
@@ -22,7 +22,7 @@ public class CORE_OPEN2FA
         Refresh()
     }
 
-    func Refresh() -> FUNC_RESULT {
+    public func Refresh() -> FUNC_RESULT {
         let dataReaden = ReadFile(fileURL: fileURL)
         guard let data = dataReaden else { return .FILE_NOT_EXIST }
         let CodesFile = try? JSONDecoder().decode(codesFile.self, from: data)
@@ -40,7 +40,7 @@ public class CORE_OPEN2FA
         } else { return .NO_CODES }
     }
 
-    func getListOTP() -> [code]
+    public func getListOTP() -> [code]
     {
         
         var array = [code]()
@@ -50,7 +50,7 @@ public class CORE_OPEN2FA
         return array.sorted()
     }
 
-    func AddCode(service_name: String, code: String) -> FUNC_RESULT
+    public func AddCode(service_name: String, code: String) -> FUNC_RESULT
     {
         for element in codes {
             if ( element.name == service_name )
@@ -66,7 +66,7 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
 
-    func DeleteCode(id: UUID) -> FUNC_RESULT
+    public func DeleteCode(id: UUID) -> FUNC_RESULT
     {
         self.codes.removeAll(where: { $0.id == id } )
         SaveArray()
@@ -87,7 +87,7 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
 
-    static func getExample() -> [code]
+    static public func getExample() -> [code]
     {
         var array = [code]()
         array.append( code(id: UUID(), date: Date(), name: "Example 1", codeSingle: "123456") )
