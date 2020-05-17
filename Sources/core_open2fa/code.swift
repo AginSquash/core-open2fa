@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct code: Identifiable, Comparable {
+public struct code: Identifiable, Comparable {
     let id: UUID
     let date: Date
     var name: String

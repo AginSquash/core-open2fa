@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum FUNC_RESULT
+public enum FUNC_RESULT
 {
     case SUCCEFULL
 
