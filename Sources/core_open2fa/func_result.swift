@@ -7,6 +7,7 @@ import Foundation
 
 public enum FUNC_RESULT
 {
+    
     case SUCCEFULL
 
     //ERROR TYPE
@@ -22,4 +23,18 @@ public enum FUNC_RESULT
     case CANNOT_CREATE_DIRECTORY
     case CHYPER_IS_NIL
     case CANNOT_DECODE
+    
+    // only for preview
+    case OTHER
+}
+
+extension String {
+    init(_ func_result: FUNC_RESULT) {
+        switch func_result {
+        case .SUCCEFULL:
+            self = "SUCCEFULL"
+        default:
+            self = "OTHER"
+        }
+    }
 }

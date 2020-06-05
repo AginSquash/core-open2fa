@@ -12,7 +12,7 @@ private func ParseCustom(str: String, element: String.Element) -> (key: String, 
     {
         let key = String( str[..<index] )
         index = str.index(after: index)
-        if let endIndex = str.index(of: element)
+        if let endIndex = str.firstIndex(of: element)
         {
             return (key: key, value: String(str[index..<endIndex]) )
         } else {
@@ -25,9 +25,9 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
 {
     var dict = Dictionary<String, String>()
     var parsingString = string
-    while parsingString.index(of: "\n") != nil
+    while parsingString.firstIndex(of: "\n") != nil
     {
-        let range = parsingString.startIndex...parsingString.index(of: "\n")!
+        let range = parsingString.startIndex...parsingString.firstIndex(of: "\n")!
         let sub = parsingString[ range ]
         parsingString.removeSubrange(range)
         if let tuple = ParseCustom(str: String(sub), element: "\n") {
@@ -45,7 +45,7 @@ func ParseStringToDict(string: String) -> Dictionary<String, String>
 
 func CreateSavedFile(IV: String, codes_ENCRYPTED: String) -> String
 {
-    var stringToSave = """
+    let stringToSave = """
                        IV:\(IV)
                        codes:\(codes_ENCRYPTED)
                        """

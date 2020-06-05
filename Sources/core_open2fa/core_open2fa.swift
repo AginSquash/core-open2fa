@@ -18,8 +18,13 @@ public class CORE_OPEN2FA
         self.fileURL = fileURL
         self.pass = password
 
-        Setup(fileURL: fileURL)
-        Refresh()
+        let setupResult = Setup(fileURL: fileURL)
+        guard setupResult == .SUCCEFULL else {
+            fatalError("setupResult" + String(setupResult))
+        }
+        
+        // return Refresh errors if exists
+        _ = Refresh()
     }
 
     public func Refresh() -> FUNC_RESULT {
@@ -58,18 +63,34 @@ public class CORE_OPEN2FA
                 return .ALREADY_EXIST
             }
         }
-        codes.append( codeSecure(name: service_name, code: code) )
-        codes.sorted()
-        SaveArray()
-
-        Refresh()
+        self.codes.append( codeSecure(name: service_name, code: code) )
+        //self.codes = codes.sorted()
+        self.codes.sort()
+        
+        // return save errors if exists
+        let saveResult = SaveArray()
+        guard saveResult == .SUCCEFULL else {
+            return saveResult
+        }
+        
+        // return Refresh errors if exists
+        let refreshResult = Refresh()
+        guard refreshResult == .SUCCEFULL else {
+            return refreshResult
+        }
+        
         return .SUCCEFULL
     }
 
     public func DeleteCode(id: UUID) -> FUNC_RESULT
     {
         self.codes.removeAll(where: { $0.id == id } )
-        SaveArray()
+        
+        let saveResult = SaveArray()
+        guard saveResult == .SUCCEFULL else {
+            return saveResult
+        }
+        
         return .SUCCEFULL
     }
 
@@ -83,7 +104,13 @@ public class CORE_OPEN2FA
             }
             
         }
-        Refresh()
+        
+        // return Refresh errors if exists
+        let refreshResult = Refresh()
+        guard refreshResult == .SUCCEFULL else {
+            return refreshResult
+        }
+        
         return .SUCCEFULL
     }
 
