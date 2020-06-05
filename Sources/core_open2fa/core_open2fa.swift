@@ -63,8 +63,12 @@ public class CORE_OPEN2FA
                 return .ALREADY_EXIST
             }
         }
+        
+        if getOTP(code: code) == "Code incorrect" { // Mb use optional?
+            return .CODE_INCORRECT
+        }
+        
         self.codes.append( codeSecure(name: service_name, code: code) )
-        //self.codes = codes.sorted()
         self.codes.sort()
         
         // return save errors if exists

@@ -23,6 +23,7 @@ public enum FUNC_RESULT
     case CANNOT_CREATE_DIRECTORY
     case CHYPER_IS_NIL
     case CANNOT_DECODE
+    case CODE_INCORRECT
     
     // only for preview
     case OTHER
