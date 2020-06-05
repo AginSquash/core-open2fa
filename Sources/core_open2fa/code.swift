@@ -16,6 +16,13 @@ public struct code: Identifiable, Comparable {
     static public func < (lhd: code, rhd: code) -> Bool {
         lhd.name < rhd.name
     }
+    
+    public init(id: UUID, date: Date, name: String, codeSingle: String) {
+        self.id = id
+        self.date = date
+        self.name = name
+        self.codeSingle = codeSingle
+    }
 }
 
 struct codeSecure: Identifiable, Codable, Comparable {
