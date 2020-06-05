@@ -22,7 +22,10 @@ func SaveFile(fileURL: URL, data: Data) -> FUNC_RESULT
         //try text.write(to: fileURL, atomically: false, encoding: .utf8)
         return .SUCCEFULL
     }
-    catch { return .CANNOT_SAVE_FILE }
+    catch {
+        print(error)
+        return .CANNOT_SAVE_FILE
+    }
 }
 
 func Setup(fileURL: URL) -> FUNC_RESULT

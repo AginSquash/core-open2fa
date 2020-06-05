@@ -47,7 +47,6 @@ public class CORE_OPEN2FA
 
     public func getListOTP() -> [code]
     {
-        
         var array = [code]()
         for c in codes {
             array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.code)) )
