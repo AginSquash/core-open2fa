@@ -87,8 +87,12 @@ public class CORE_OPEN2FA
 
     public func DeleteCode(id: UUID) -> FUNC_RESULT
     {
+        let start_count = self.codes.count
         self.codes.removeAll(where: { $0.id == id } )
-        
+        let end_count = self.codes.count
+        guard end_count < start_count else {
+            fatalError("Delete error")
+        }
         let saveResult = SaveArray()
         guard saveResult == .SUCCEFULL else {
             return saveResult
