@@ -24,6 +24,7 @@ public enum FUNC_RESULT
     case CHYPER_IS_NIL
     case CANNOT_DECODE
     case CODE_INCORRECT
+    case NOT_ENCODABLE
     
     // only for preview
     case OTHER

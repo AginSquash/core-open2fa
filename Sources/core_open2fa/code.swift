@@ -26,8 +26,8 @@ public struct code: Identifiable, Comparable {
 }
 
 struct codeSecure: Identifiable, Codable, Comparable {
-    let id = UUID()
-    let date = Date()
+    let id: UUID
+    let date: Date
     var name: String
     var code: String
     static func < (lhd: codeSecure, rhd: codeSecure) -> Bool {

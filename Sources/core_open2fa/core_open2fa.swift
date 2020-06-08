@@ -23,7 +23,6 @@ public class CORE_OPEN2FA
             fatalError("setupResult" + String(setupResult))
         }
         
-        // return Refresh errors if exists
         _ = Refresh()
     }
 
@@ -67,7 +66,7 @@ public class CORE_OPEN2FA
             return .CODE_INCORRECT
         }
         
-        self.codes.append( codeSecure(name: service_name, code: code) )
+        self.codes.append( codeSecure(id: UUID(), date: Date(), name: service_name, code: code) )
         self.codes.sort()
         
         // return save errors if exists
@@ -87,21 +86,11 @@ public class CORE_OPEN2FA
 
     public func DeleteCode(id: UUID) -> FUNC_RESULT
     {
-        let start_count = self.codes.count
         self.codes.removeAll(where: { $0.id == id } )
-        let end_count = self.codes.count
-        guard end_count < start_count else {
-            #if DEBUG
-            print("[DEBUG MODE]")
-            #endif
-            print("codes: \(self.codes)")
-            fatalError("Delete error")
-        }
         let saveResult = SaveArray()
         guard saveResult == .SUCCEFULL else {
             return saveResult
         }
-        
         return .SUCCEFULL
     }
 
@@ -120,14 +109,7 @@ public class CORE_OPEN2FA
             
         }
         
-        // return Refresh errors if exists
-        /*
-        let refreshResult = Refresh()
-        guard refreshResult == .SUCCEFULL else {
-            return refreshResult
-        }  */
-        
-        return .SUCCEFULL
+        return .NOT_ENCODABLE
     }
 
     static public func getExample() -> [code]
