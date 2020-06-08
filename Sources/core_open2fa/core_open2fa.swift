@@ -91,6 +91,10 @@ public class CORE_OPEN2FA
         self.codes.removeAll(where: { $0.id == id } )
         let end_count = self.codes.count
         guard end_count < start_count else {
+            #if DEBUG
+            print("[DEBUG MODE]")
+            #endif
+            print("codes: \(self.codes)")
             fatalError("Delete error")
         }
         let saveResult = SaveArray()
