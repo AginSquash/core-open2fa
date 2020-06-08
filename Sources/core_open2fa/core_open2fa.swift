@@ -121,10 +121,11 @@ public class CORE_OPEN2FA
         }
         
         // return Refresh errors if exists
+        /*
         let refreshResult = Refresh()
         guard refreshResult == .SUCCEFULL else {
             return refreshResult
-        }
+        }  */
         
         return .SUCCEFULL
     }
