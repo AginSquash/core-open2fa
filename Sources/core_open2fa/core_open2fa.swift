@@ -101,10 +101,7 @@ public class CORE_OPEN2FA
             let dataToWrite = codesFile(IV: self.IV, codes: encrypted)
             if let encodedFile = try? JSONEncoder().encode(dataToWrite) {
                 let saveResult = SaveFile(fileURL: self.fileURL, data: encodedFile)
-                
-                guard saveResult == .SUCCEFULL else {
-                    return saveResult
-                }
+                return saveResult
             }
             
         }
