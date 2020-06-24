@@ -50,6 +50,18 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( core.getListOTP() != [])
     }
     
+    func testCheckPasswordCORRECTLY() {
+        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
+        let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+        XCTAssert(result == .SUCCEFULL)
+    }
+    
+    func testCheckPasswordFAKE() {
+        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
+        let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "FAKE_PASS")
+        XCTAssert(result != .SUCCEFULL)
+    }
+    
     func testDeleteService() {
         core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
         let codeID = core.getListOTP().first!.id
@@ -72,6 +84,8 @@ final class core_open2faTests: XCTestCase {
         ("testEncryption", testEncryption),
         ("testCreation", testCreation),
         ("testAddService", testAddService),
+        ("testCheckPasswordCORRECTLY", testCheckPasswordCORRECTLY),
+        ("testCheckPasswordFAKE", testCheckPasswordFAKE),
         ("testDeleteService", testDeleteService),
     ]
 }

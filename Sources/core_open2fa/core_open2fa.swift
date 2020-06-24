@@ -13,6 +13,27 @@ public class CORE_OPEN2FA
 
     private var codes = [codeSecure]()
     
+    public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
+        let setupResult = Setup(fileURL: fileURL)
+        guard setupResult == .SUCCEFULL else {
+            fatalError("setupResult" + String(setupResult))
+        }
+        
+        let dataReaden = ReadFile(fileURL: fileURL)
+        guard let data = dataReaden else { return .FILE_NOT_EXIST }
+        let CodesFile = try? JSONDecoder().decode(codesFile.self, from: data)
+        guard let cf = CodesFile else { return .FILE_UNVIABLE }
+        
+        
+        if let codes = cf.codes {
+            if let decrypted = DecryptAES256(key: password, iv: cf.IV, data: codes) {
+                if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                    return .SUCCEFULL
+                } else { return .CANNOT_DECODE }
+            } else { return .PASS_INCORRECT }
+        } else { return .NO_CODES }
+    }
+    
     public init(fileURL: URL, password: String)
     {
         self.fileURL = fileURL
