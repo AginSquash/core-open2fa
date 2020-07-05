@@ -11,13 +11,13 @@ public struct code: Identifiable, Comparable {
     public let id: UUID
     public let date: Date
     public var name: String
-    public var codeSingle: String
+    public var codeSingle: String?
     
     static public func < (lhd: code, rhd: code) -> Bool {
         lhd.name < rhd.name
     }
     
-    public init(id: UUID, date: Date, name: String, codeSingle: String) {
+    public init(id: UUID, date: Date, name: String, codeSingle: String?) {
         self.id = id
         self.date = date
         self.name = name

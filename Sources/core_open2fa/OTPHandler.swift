@@ -6,7 +6,7 @@
 import Foundation
 import SwiftOTP
 
-func getOTP(code: String) -> String
+func getOTP(code: String) -> String?
 {
     if let data = base32DecodeToData(code)
     {
@@ -15,5 +15,5 @@ func getOTP(code: String) -> String
             return otpString!
         }
     }
-    return "Code incorrect"
+    return nil
 }

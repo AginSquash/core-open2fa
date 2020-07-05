@@ -13,7 +13,7 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testTOTP() {
-        XCTAssert( getOTP(code: "q4qghrcn2c42bgbz") != "Code incorrect" )
+        XCTAssert( getOTP(code: "q4qghrcn2c42bgbz") != nil )
     }
 
     func testSaveRead() {

@@ -69,7 +69,7 @@ public class CORE_OPEN2FA
     {
         var array = [code]()
         for c in codes {
-            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.code)) )
+            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.code) ) )
         }
         return array.sorted()
     }
@@ -83,7 +83,7 @@ public class CORE_OPEN2FA
             }
         }
         
-        if getOTP(code: code) == "Code incorrect" { // Mb use optional?
+        if getOTP(code: code) == nil { 
             return .CODE_INCORRECT
         }
         
