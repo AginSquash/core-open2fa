@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Code that can be used outside of core
 public struct code: Identifiable, Comparable {
     public let id: UUID
     public let date: Date
@@ -25,6 +26,7 @@ public struct code: Identifiable, Comparable {
     }
 }
 
+/// [CORE USAGE ONLY] Code with key for 2FA generation
 struct codeSecure: Identifiable, Codable, Comparable {
     let id: UUID
     let date: Date

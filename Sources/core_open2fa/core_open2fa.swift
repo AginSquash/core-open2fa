@@ -13,10 +13,11 @@ public class CORE_OPEN2FA
 
     private var codes = [codeSecure]()
     
+    /// Check password for correctly
     public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
         let setupResult = Setup(fileURL: fileURL)
         guard setupResult == .SUCCEFULL else {
-            fatalError("setupResult" + String(setupResult))
+            fatalError("setupResult " + String(setupResult))
         }
         
         let dataReaden = ReadFile(fileURL: fileURL)
@@ -34,6 +35,7 @@ public class CORE_OPEN2FA
         } else { return .NO_CODES }
     }
     
+
     public init(fileURL: URL, password: String)
     {
         self.fileURL = fileURL
@@ -47,6 +49,7 @@ public class CORE_OPEN2FA
         _ = Refresh()
     }
 
+    ///  Update codes from file
     public func Refresh() -> FUNC_RESULT {
         let dataReaden = ReadFile(fileURL: fileURL)
         guard let data = dataReaden else { return .FILE_NOT_EXIST }
@@ -65,6 +68,7 @@ public class CORE_OPEN2FA
         } else { return .NO_CODES }
     }
 
+    /// Return list of codes (id, date, name and 2FA code)
     public func getListOTP() -> [code]
     {
         var array = [code]()
@@ -74,6 +78,7 @@ public class CORE_OPEN2FA
         return array.sorted()
     }
 
+    /// Added code to all codes and save file.
     public func AddCode(service_name: String, code: String) -> FUNC_RESULT
     {
         for element in codes {
@@ -105,6 +110,7 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
 
+    /// This function delete code by UUID
     public func DeleteCode(id: UUID) -> FUNC_RESULT
     {
         self.codes.removeAll(where: { $0.id == id } )
@@ -115,8 +121,8 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
 
+    /// Save codes to file
     private func SaveArray() -> FUNC_RESULT {
-        
         if let encoded = try? JSONEncoder().encode(self.codes) {
             let encrypted = CryptAES256(key: self.pass, iv: self.IV, data: encoded)
             let dataToWrite = codesFile(IV: self.IV, codes: encrypted)
@@ -130,6 +136,7 @@ public class CORE_OPEN2FA
         return .NOT_ENCODABLE
     }
 
+    /// Return example of codes (id, date, name and 2FA code)
     static public func getExample() -> [code]
     {
         var array = [code]()
