@@ -42,7 +42,7 @@ final class core_open2faTests: XCTestCase {
     let core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
     
     func testCreation() {
-        XCTAssert (core.getListOTP() == [])
+        XCTAssert ((try? core.getListOTP()) != nil)
     }
     
     func testAddService() {

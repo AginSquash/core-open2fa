@@ -27,7 +27,7 @@ public class CORE_OPEN2FA
         
         if let codes = cf.codes {
             if let decrypted = DecryptAES256(key: password, iv: cf.IV, data: codes) {
-                if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                if ((try? JSONDecoder().decode([codeSecure].self, from: decrypted)) != nil) {
                     return .SUCCEFULL
                 } else { return .CANNOT_DECODE }
             } else { return .PASS_INCORRECT }
