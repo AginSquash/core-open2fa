@@ -46,7 +46,10 @@ func Setup(fileURL: URL, pass: String) -> FUNC_RESULT
         let IV = getIV()
         let word = dictionary_words.randomElement()
         let word_encoded = try! JSONEncoder().encode(word)
-        let passcheck = CryptAES256(key: pass, iv: IV, data: word_encoded) 
+        let passcheck = CryptAES256(key: pass, iv: IV, data: word_encoded)
+        
+        print("DEBUG: word \(word)")
+        print("DEBUG: passcheck \(passcheck)")
         
         let cf = codesFile(IV: IV, passcheck: passcheck, codes: nil)
         let data = try! JSONEncoder().encode(cf)
