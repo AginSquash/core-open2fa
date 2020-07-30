@@ -16,12 +16,6 @@ public class CORE_OPEN2FA
     /// Check password for correctly
     public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
         
-        /*
-        let setupResult = Setup(fileURL: fileURL, pass: password)
-        guard setupResult == .SUCCEFULL else {
-            fatalError("setupResult " + String(setupResult))
-        } */
-        
         let dataReaden = ReadFile(fileURL: fileURL)
         guard let data = dataReaden else { return .FILE_NOT_EXIST }
         let CodesFile = try? JSONDecoder().decode(codesFile.self, from: data)
@@ -32,7 +26,6 @@ public class CORE_OPEN2FA
         if let decrypted = DecryptAES256(key: password, iv: cf.IV, data: check) {
             if let decoded = try? JSONDecoder().decode(String.self, from: decrypted) {
                 if dictionary_words.contains(decoded) {
-                    print("DEBUG: \(decoded)")
                     return .SUCCEFULL
                 } else { return .PASS_INCORRECT }
             } else { return .CANNOT_DECODE }
