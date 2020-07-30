@@ -2,10 +2,10 @@ import XCTest
 @testable import core_open2fa
 
 final class core_open2faTests: XCTestCase {
-    static var core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+    var core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
     
     override func setUp() {
-        core_open2faTests.core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+        core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
     }
     
     func testSetup() {
@@ -46,12 +46,12 @@ final class core_open2faTests: XCTestCase {
 
     
     func testCreation() {
-        XCTAssert ((try? core_open2faTests.core.getListOTP()) != nil)
+        XCTAssert ((try? core.getListOTP()) != nil)
     }
     
     func testAddService() {
-        core_open2faTests.core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
-        XCTAssert( core_open2faTests.core.getListOTP() != [])
+        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
+        XCTAssert( core.getListOTP() != [])
     }
     
     func testCheckPasswordCORRECTLY() {
@@ -65,10 +65,10 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testDeleteService() {
-        core_open2faTests.core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
-        let codeID = core_open2faTests.core.getListOTP().first!.id
-        core_open2faTests.core.DeleteCode(id: codeID)
-        XCTAssert( core_open2faTests.core.getListOTP().first(where: {$0.id == codeID }) == nil)
+        core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
+        let codeID = core.getListOTP().first!.id
+        core.DeleteCode(id: codeID)
+        XCTAssert( core.getListOTP().first(where: {$0.id == codeID }) == nil)
     }
     
     
