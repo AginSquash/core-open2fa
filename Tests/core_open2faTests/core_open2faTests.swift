@@ -2,12 +2,17 @@ import XCTest
 @testable import core_open2fa
 
 final class core_open2faTests: XCTestCase {
+    var core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+    
+    override func setUp() {
+        core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+    }
     
     func testSetup() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("codes_test.data")
         
-        XCTAssert( Setup(fileURL: url) == .SUCCEFULL )
+        XCTAssert( Setup(fileURL: url, pass: "pass") == .SUCCEFULL )
         
         try? FileManager.default.removeItem(at: url)
     }
@@ -28,7 +33,7 @@ final class core_open2faTests: XCTestCase {
     
     func testEncryption() {
         let IV = "abcdefghijklmnop"
-        let pass = "123456"
+        let pass = "pass"
         
         let testString = "TestString"
         
@@ -39,7 +44,6 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( testString == decryptedString )
     }
 
-    let core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
     
     func testCreation() {
         XCTAssert ((try? core.getListOTP()) != nil)
@@ -51,13 +55,11 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testCheckPasswordCORRECTLY() {
-        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
         let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
         XCTAssert(result == .SUCCEFULL)
     }
     
     func testCheckPasswordFAKE() {
-        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
         let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "FAKE_PASS")
         XCTAssert(result != .SUCCEFULL)
     }
