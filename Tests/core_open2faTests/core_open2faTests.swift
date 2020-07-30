@@ -2,6 +2,11 @@ import XCTest
 @testable import core_open2fa
 
 final class core_open2faTests: XCTestCase {
+    static var core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+    
+    override func setUp() {
+        core_open2faTests.core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+    }
     
     func testSetup() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -39,35 +44,31 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( testString == decryptedString )
     }
 
-    let core = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
     
     func testCreation() {
-        XCTAssert ((try? core.getListOTP()) != nil)
+        XCTAssert ((try? core_open2faTests.core.getListOTP()) != nil)
     }
     
     func testAddService() {
-        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
-        XCTAssert( core.getListOTP() != [])
+        core_open2faTests.core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
+        XCTAssert( core_open2faTests.core.getListOTP() != [])
     }
     
     func testCheckPasswordCORRECTLY() {
-        //core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
         let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
-        print(result)
         XCTAssert(result == .SUCCEFULL)
     }
     
     func testCheckPasswordFAKE() {
-        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
         let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "FAKE_PASS")
         XCTAssert(result != .SUCCEFULL)
     }
     
     func testDeleteService() {
-        core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
-        let codeID = core.getListOTP().first!.id
-        core.DeleteCode(id: codeID)
-        XCTAssert( core.getListOTP().first(where: {$0.id == codeID }) == nil)
+        core_open2faTests.core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
+        let codeID = core_open2faTests.core.getListOTP().first!.id
+        core_open2faTests.core.DeleteCode(id: codeID)
+        XCTAssert( core_open2faTests.core.getListOTP().first(where: {$0.id == codeID }) == nil)
     }
     
     
