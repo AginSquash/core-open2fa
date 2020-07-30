@@ -39,5 +39,6 @@ struct codeSecure: Identifiable, Codable, Comparable {
 
 struct codesFile: Codable {
     var IV: String
+    var passcheck: Data?
     var codes: Data?
 }
