@@ -7,7 +7,7 @@ final class core_open2faTests: XCTestCase {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("codes_test.data")
         
-        XCTAssert( Setup(fileURL: url) == .SUCCEFULL )
+        XCTAssert( Setup(fileURL: url, pass: "123456") == .SUCCEFULL )
         
         try? FileManager.default.removeItem(at: url)
     }

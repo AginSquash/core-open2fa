@@ -28,7 +28,7 @@ func SaveFile(fileURL: URL, data: Data) -> FUNC_RESULT
     }
 }
 
-func Setup(fileURL: URL) -> FUNC_RESULT
+func Setup(fileURL: URL, pass: String) -> FUNC_RESULT
 {
     do {
         _ = try String(contentsOf: fileURL, encoding: .utf8)
@@ -44,7 +44,11 @@ func Setup(fileURL: URL) -> FUNC_RESULT
         catch { return .CANNOT_CREATE_DIRECTORY }
 
         let IV = getIV()
-        let cf = codesFile(IV: IV, codes: nil)
+        let word = dictionary_words.randomElement()
+        let word_encoded = try! JSONEncoder().encode(word)
+        let passcheck = CryptAES256(key: pass, iv: IV, data: word_encoded) 
+        
+        let cf = codesFile(IV: IV, passcheck: passcheck, codes: nil)
         let data = try! JSONEncoder().encode(cf)
         return ( SaveFile(fileURL: fileURL, data: data ))
     }
