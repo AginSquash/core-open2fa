@@ -71,6 +71,12 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( core.getListOTP().first(where: {$0.id == codeID }) == nil)
     }
     
+    func testSaveInMultiThreading() {
+        core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
+        usleep(1000000)
+        let newcore = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+        XCTAssert( newcore.getListOTP().first(where: {$0.name == "testDelete" }) != nil)
+    }
     
     override func tearDown() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
