@@ -16,10 +16,10 @@ public class CORE_OPEN2FA
     /// Check password for correctly
     public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
         
-        /*let setupResult = Setup(fileURL: fileURL, pass: password)
+        let setupResult = Setup(fileURL: fileURL, pass: password)
         guard setupResult == .SUCCEFULL else {
             fatalError("setupResult " + String(setupResult))
-        } */
+        } 
         
         let dataReaden = ReadFile(fileURL: fileURL)
         guard let data = dataReaden else { return .FILE_NOT_EXIST }

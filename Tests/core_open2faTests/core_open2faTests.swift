@@ -7,7 +7,7 @@ final class core_open2faTests: XCTestCase {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("codes_test.data")
         
-        XCTAssert( Setup(fileURL: url, pass: "123456") == .SUCCEFULL )
+        XCTAssert( Setup(fileURL: url, pass: "pass") == .SUCCEFULL )
         
         try? FileManager.default.removeItem(at: url)
     }
@@ -28,7 +28,7 @@ final class core_open2faTests: XCTestCase {
     
     func testEncryption() {
         let IV = "abcdefghijklmnop"
-        let pass = "123456"
+        let pass = "pass"
         
         let testString = "TestString"
         
@@ -51,8 +51,9 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testCheckPasswordCORRECTLY() {
-        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
+        //core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
         let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
+        print(result)
         XCTAssert(result == .SUCCEFULL)
     }
     
