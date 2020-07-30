@@ -96,15 +96,8 @@ public class CORE_OPEN2FA
         self.codes.sort()
         
         // return save errors if exists
-        let saveResult = SaveArray()
-        guard saveResult == .SUCCEFULL else {
-            return saveResult
-        }
-        
-        // return Refresh errors if exists
-        let refreshResult = Refresh()
-        guard refreshResult == .SUCCEFULL else {
-            return refreshResult
+        DispatchQueue.global(qos: .userInitiated).async {
+           _ = self.SaveArray()
         }
         
         return .SUCCEFULL
@@ -114,10 +107,16 @@ public class CORE_OPEN2FA
     public func DeleteCode(id: UUID) -> FUNC_RESULT
     {
         self.codes.removeAll(where: { $0.id == id } )
+        /*
         let saveResult = SaveArray()
         guard saveResult == .SUCCEFULL else {
             return saveResult
+        } */
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+           _ = self.SaveArray()
         }
+        
         return .SUCCEFULL
     }
 
@@ -125,7 +124,6 @@ public class CORE_OPEN2FA
     private func SaveArray() -> FUNC_RESULT {
         if let encoded = try? JSONEncoder().encode(self.codes) {
             let encrypted = CryptAES256(key: self.pass, iv: self.IV, data: encoded)
-            let dataToWrite = codesFile(IV: self.IV, codes: encrypted)
             if let encodedFile = try? JSONEncoder().encode(dataToWrite) {
                 let saveResult = SaveFile(fileURL: self.fileURL, data: encodedFile)
                 return saveResult
