@@ -10,33 +10,38 @@ public class CORE_OPEN2FA
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    private var passcheck: Data? = nil
+
     private var codes = [codeSecure]()
     
     /// Check password for correctly
     public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
+        let setupResult = Setup(fileURL: fileURL)
+        guard setupResult == .SUCCEFULL else {
+            fatalError("setupResult " + String(setupResult))
+        }
         
         let dataReaden = ReadFile(fileURL: fileURL)
         guard let data = dataReaden else { return .FILE_NOT_EXIST }
         let CodesFile = try? JSONDecoder().decode(codesFile.self, from: data)
         guard let cf = CodesFile else { return .FILE_UNVIABLE }
         
-        guard let check = cf.passcheck else { return .PASSCHECK_NULL }
         
-        if let decrypted = DecryptAES256(key: password, iv: cf.IV, data: check) {
-            if let decoded = try? JSONDecoder().decode(String.self, from: decrypted) {
-                if dictionary_words.contains(decoded) {
+        if let codes = cf.codes {
+            if let decrypted = DecryptAES256(key: password, iv: cf.IV, data: codes) {
+                if ((try? JSONDecoder().decode([codeSecure].self, from: decrypted)) != nil) {
                     return .SUCCEFULL
-                } else { return .PASS_INCORRECT }
-            } else { return .CANNOT_DECODE }
-        } else { return .PASS_INCORRECT }
+                } else { return .CANNOT_DECODE }
+            } else { return .PASS_INCORRECT }
+        } else { return .NO_CODES }
     }
     
+
     public init(fileURL: URL, password: String)
     {
         self.fileURL = fileURL
         self.pass = password
-        let setupResult = Setup(fileURL: fileURL, pass: password)
+
+        let setupResult = Setup(fileURL: fileURL)
         guard setupResult == .SUCCEFULL else {
             fatalError("setupResult" + String(setupResult))
         }
@@ -52,10 +57,6 @@ public class CORE_OPEN2FA
         guard let cf = CodesFile else { return .FILE_UNVIABLE }
         
         self.IV = cf.IV
-        
-        if passcheck == nil {
-            self.passcheck = cf.passcheck
-        }
         
         if let codes = cf.codes {
             if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
@@ -124,13 +125,7 @@ public class CORE_OPEN2FA
     private func SaveArray() -> FUNC_RESULT {
         if let encoded = try? JSONEncoder().encode(self.codes) {
             let encrypted = CryptAES256(key: self.pass, iv: self.IV, data: encoded)
-            if passcheck == nil {
-                let word = dictionary_words.randomElement()
-                let word_encoded = try! JSONEncoder().encode(word)
-                passcheck = CryptAES256(key: self.pass, iv: self.IV, data: word_encoded)
-            }
-            guard let passcheck = passcheck else { fatalError("Passcheck is nil") }
-            let dataToWrite = codesFile(IV: self.IV, passcheck: passcheck, codes: encrypted)
+            let dataToWrite = codesFile(IV: self.IV, codes: encrypted)
             if let encodedFile = try? JSONEncoder().encode(dataToWrite) {
                 let saveResult = SaveFile(fileURL: self.fileURL, data: encodedFile)
                 return saveResult
