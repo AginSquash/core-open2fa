@@ -44,6 +44,8 @@ public class CORE_OPEN2FA
         _ = Refresh()
     }
 
+    public init() { }
+    
     ///  Update codes from file
     public func Refresh() -> FUNC_RESULT {
         let dataReaden = ReadFile(fileURL: fileURL)
@@ -129,9 +131,7 @@ public class CORE_OPEN2FA
                 let saveResult = SaveFile(fileURL: self.fileURL, data: encodedFile)
                 return saveResult
             }
-            
         }
-        
         return .NOT_ENCODABLE
     }
 
