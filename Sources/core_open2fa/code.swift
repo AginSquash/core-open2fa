@@ -35,9 +35,11 @@ struct codeSecure: Identifiable, Codable, Comparable {
     static func < (lhd: codeSecure, rhd: codeSecure) -> Bool {
         lhd.name < rhd.name
     }
+
 }
 
 struct codesFile: Codable {
+    var core_version: String = CORE_OPEN2FA.core_version
     var IV: String
     var passcheck: Data?
     var codes: Data?
