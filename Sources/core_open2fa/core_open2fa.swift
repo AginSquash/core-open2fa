@@ -136,7 +136,22 @@ public class CORE_OPEN2FA
     }
     
     private func UpdateFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {
-        if version < "4.0.0" {
+        
+        /// Bug with incorrect version in codesFile
+        if version == "3.1.0" {
+            if let codes = cf.codes {
+                if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
+                    if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                        self.codes = decoded
+                        _ = self.SaveArray()
+                        return .SUCCEFULL
+                    } else { return .CANNOT_DECODE }
+                } else { return .PASS_INCORRECT }
+            } else { return .NO_CODES }
+        }
+        
+        /// Just renaming 'code' to 'secret' in codeSecure file
+        if version < "3.1.0" {
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
                     if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
