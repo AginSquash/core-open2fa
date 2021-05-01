@@ -61,7 +61,7 @@ public class CORE_OPEN2FA
         }
         
         if cf.core_version < CORE_OPEN2FA.core_version {
-            return self.UpdateFileVersion(from: cf.core_version, withCF: cf)
+            return self.UpgradeFileVersion(from: cf.core_version, withCF: cf)
         }
         
         if let codes = cf.codes {
@@ -135,7 +135,7 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
     
-    private func UpdateFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {
+    private func UpgradeFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {
         
         /// Bug with incorrect version in codesFile
         if version == "3.1.0" {
@@ -144,6 +144,7 @@ public class CORE_OPEN2FA
                     if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
                         self.codes = decoded
                         _ = self.SaveArray()
+                        print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
                         return .SUCCEFULL
                     } else { return .CANNOT_DECODE }
                 } else { return .PASS_INCORRECT }
