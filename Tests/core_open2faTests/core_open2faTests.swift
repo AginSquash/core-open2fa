@@ -78,6 +78,16 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( newcore.getListOTP().first(where: {$0.name == "testDelete" }) != nil)
     }
     
+    func testTypeCastingForLegacyFiles() {
+        let uuid = UUID()
+        let name = "RandomName"
+        let code = "q4qghrcn2c42bgbz"
+        let csl = codeSecure_legacy(id: uuid, date: Date(), name: name, code: code)
+        let csl_array = [csl, csl, csl]
+        let cs: [codeSecure] = csl_array.map({ codeSecure($0) })
+        XCTAssert( cs.count == 3)
+    }
+    
     override func tearDown() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("test_file")
@@ -95,5 +105,6 @@ final class core_open2faTests: XCTestCase {
         ("testCheckPasswordCORRECTLY", testCheckPasswordCORRECTLY),
         ("testCheckPasswordFAKE", testCheckPasswordFAKE),
         ("testDeleteService", testDeleteService),
+        ("testTypeCastingForLegacyFiles", testTypeCastingForLegacyFiles)
     ]
 }
