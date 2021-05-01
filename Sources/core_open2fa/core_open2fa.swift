@@ -95,7 +95,6 @@ public class CORE_OPEN2FA
         }
         
         self.codes.append( codeSecure(id: UUID(), date: Date(), name: service_name, code: code) )
-        self.codes.sort()
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {
