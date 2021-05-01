@@ -121,6 +121,16 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
 
+    public func migrateSavedFile() -> FUNC_RESULT {
+        self.codes.sort(by: { $0.date < $1.date })
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+           _ = self.SaveArray()
+        }
+        
+        return .SUCCEFULL
+    }
+    
     /// Save codes to file
     private func SaveArray() -> FUNC_RESULT {
         if let encoded = try? JSONEncoder().encode(self.codes) {
