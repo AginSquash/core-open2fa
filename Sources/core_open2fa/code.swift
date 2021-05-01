@@ -27,7 +27,28 @@ public struct code: Identifiable, Comparable {
 }
 
 /// [CORE USAGE ONLY] Code with key for 2FA generation
-struct codeSecure: Identifiable, Codable { 
+struct codeSecure: Identifiable, Codable {
+    let id: UUID
+    let date: Date
+    var name: String
+    var secret: String
+    
+    init(_ csl: codeSecure_legacy) {
+        self.id = csl.id
+        self.date = csl.date
+        self.name = csl.name
+        self.secret = csl.code
+    }
+    
+    init(id: UUID, date: Date, name: String, secret: String) {
+        self.id = id
+        self.date = date
+        self.name = name
+        self.secret = secret
+    }
+}
+
+struct codeSecure_legacy: Identifiable, Codable {
     let id: UUID
     let date: Date
     var name: String
