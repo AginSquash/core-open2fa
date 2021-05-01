@@ -140,7 +140,7 @@ public class CORE_OPEN2FA
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
                     if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
-                        self.codes = decoded as! [codeSecure]
+                        self.codes = decoded.map({ codeSecure($0) })
                         _ = self.SaveArray()
                         print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
                         return .SUCCEFULL
