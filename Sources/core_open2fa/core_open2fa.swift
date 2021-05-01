@@ -60,6 +60,10 @@ public class CORE_OPEN2FA
             self.passcheck = cf.passcheck
         }
         
+        if cf.core_version < CORE_OPEN2FA.core_version {
+            return self.UpdateFileVersion(from: cf.core_version, withCF: cf)
+        }
+        
         if let codes = cf.codes {
             if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
                 if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
@@ -75,7 +79,7 @@ public class CORE_OPEN2FA
     {
         var array = [code]()
         for c in codes {
-            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.code) ) )
+            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.secret) ) )
         }
         return array
     }
@@ -94,7 +98,7 @@ public class CORE_OPEN2FA
             return .CODE_INCORRECT
         }
         
-        self.codes.append( codeSecure(id: UUID(), date: Date(), name: service_name, code: code) )
+        self.codes.append( codeSecure(id: UUID(), date: Date(), name: service_name, secret: code) )
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {
@@ -129,6 +133,22 @@ public class CORE_OPEN2FA
         }
         
         return .SUCCEFULL
+    }
+    
+    private func UpdateFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {
+        if version < "4.0.0" {
+            if let codes = cf.codes {
+                if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
+                    if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
+                        self.codes = decoded as! [codeSecure]
+                        _ = self.SaveArray()
+                        print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
+                        return .SUCCEFULL
+                    } else { return .CANNOT_DECODE }
+                } else { return .PASS_INCORRECT }
+            } else { return .NO_CODES }
+        }
+        return .OTHER
     }
     
     /// Save codes to file
