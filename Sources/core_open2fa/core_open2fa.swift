@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "3.2.2"
+    public static let core_version: String = "3.2.4"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -137,6 +137,19 @@ public class CORE_OPEN2FA
     
     private func UpgradeFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {
         
+        // Fix for codes sorted with date
+        if version == "3.2.2" {
+            if let codes = cf.codes {
+                if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
+                    if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                        self.codes = decoded.sorted(by: { $0.date < $1.date })
+                        _ = self.SaveArray()
+                        print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
+                        return .SUCCEFULL
+                    } else { return .CANNOT_DECODE }
+                } else { return .PASS_INCORRECT }
+            } else { return .NO_CODES }
+        }
         /// Bug with incorrect version in codesFile
         if version == "3.1.0" {
             if let codes = cf.codes {
