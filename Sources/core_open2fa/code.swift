@@ -15,7 +15,7 @@ public struct code: Identifiable, Comparable {
     public var codeSingle: String?
     
     static public func < (lhd: code, rhd: code) -> Bool {
-        lhd.name < rhd.name
+        lhd.date < rhd.date
     }
     
     public init(id: UUID, date: Date, name: String, codeSingle: String?) {
@@ -27,15 +27,11 @@ public struct code: Identifiable, Comparable {
 }
 
 /// [CORE USAGE ONLY] Code with key for 2FA generation
-struct codeSecure: Identifiable, Codable, Comparable {
+struct codeSecure: Identifiable, Codable { 
     let id: UUID
     let date: Date
     var name: String
     var code: String
-    static func < (lhd: codeSecure, rhd: codeSecure) -> Bool {
-        lhd.name < rhd.name
-    }
-
 }
 
 struct codesFile: Codable {
