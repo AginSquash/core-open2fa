@@ -77,7 +77,7 @@ public class CORE_OPEN2FA
         for c in codes {
             array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.code) ) )
         }
-        return array.sorted()
+        return array
     }
 
     /// Added code to all codes and save file.
@@ -151,7 +151,7 @@ public class CORE_OPEN2FA
         var array = [code]()
         array.append( code(id: UUID(), date: Date(), name: "Example 1", codeSingle: "123456") )
         array.append( code(id: UUID(), date: Date(), name: "Example 2", codeSingle: "456789") )
-        return array.sorted()
+        return array
     }
     
 }
