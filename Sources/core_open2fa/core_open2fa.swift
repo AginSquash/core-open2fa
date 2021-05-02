@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "3.2.4"
+    public static let core_version: String = "3.2.5"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -164,12 +164,12 @@ public class CORE_OPEN2FA
             } else { return .NO_CODES }
         }
         
-        /// Just renaming 'code' to 'secret' in codeSecure file
+        /// Just renaming 'code' to 'secret' in codeSecure file. Already with all 3.2.5 fix
         if version < "3.1.0" {
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
                     if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
-                        self.codes = decoded.map({ codeSecure($0) })
+                        self.codes = decoded.map({ codeSecure($0) }).sorted(by: { $0.date < $1.date })
                         _ = self.SaveArray()
                         print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
                         return .SUCCEFULL
