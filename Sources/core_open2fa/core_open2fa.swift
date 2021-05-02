@@ -177,7 +177,18 @@ public class CORE_OPEN2FA
                 } else { return .PASS_INCORRECT }
             } else { return .NO_CODES }
         }
-        return .OTHER
+        
+        // no fix for version needed. Just update CF version
+        if let codes = cf.codes {
+            if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
+                if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                    self.codes = decoded.sorted(by: { $0.date < $1.date })
+                    _ = self.SaveArray()
+                    print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
+                    return .SUCCEFULL
+                } else { return .CANNOT_DECODE }
+            } else { return .PASS_INCORRECT }
+        } else { return .NO_CODES }
     }
     
     /// Save codes to file
