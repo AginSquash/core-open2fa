@@ -107,6 +107,28 @@ public class CORE_OPEN2FA
         
         return .SUCCEFULL
     }
+    
+    public func EditCode(id: UUID, newName: String) -> FUNC_RESULT {
+        for element in codes {
+            if ( element.name == newName )
+            {
+                return .ALREADY_EXIST
+            }
+        }
+        
+        guard let index = self.codes.firstIndex(where: { $0.id == id }) else {
+            return .CANNOT_FIND_ID
+        }
+        
+        self.codes[index].name = newName
+        
+        // return save errors if exists
+        DispatchQueue.global(qos: .userInitiated).async {
+           _ = self.SaveArray()
+        }
+        
+        return .SUCCEFULL
+    }
 
     /// This function delete code by UUID
     public func DeleteCode(id: UUID) -> FUNC_RESULT

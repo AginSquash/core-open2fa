@@ -26,6 +26,7 @@ public enum FUNC_RESULT
     case CODE_INCORRECT
     case NOT_ENCODABLE
     case PASSCHECK_NULL
+    case CANNOT_FIND_ID
     
     // only for preview
     case OTHER

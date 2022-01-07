@@ -54,6 +54,21 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( core.getListOTP() != [])
     }
     
+    func testEditService() {
+        _ = core.AddCode(service_name: "testEditService", code: "q4qghrcn2c42bgbz")
+        let codes = core.getListOTP()
+        guard let choosenCode = codes.first(where: { $0.name == "testEditService" }) else {
+            XCTFail("Cannot find added testEditServiceservice")
+            return
+        }
+        
+        _ = core.EditCode(id: choosenCode.id, newName: "testEditService2")
+        
+        let newCodes = core.getListOTP()
+        let success = (newCodes.first(where: { $0.name == "testEditService" }) == nil) && (newCodes.first(where: { $0.name == "testEditService2" }) != nil)
+        XCTAssert(success)
+    }
+    
     func testCheckPasswordCORRECTLY() {
         let result = CORE_OPEN2FA.checkPassword(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
         XCTAssert(result == .SUCCEFULL)
