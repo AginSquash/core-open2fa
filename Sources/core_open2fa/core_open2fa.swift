@@ -12,7 +12,7 @@ open class CORE_OPEN2FA
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     private var passcheck: Data? = nil
-    private var codes = [codeSecure]()
+    internal var codes = [codeSecure]()
     
     /// Check password for correctly
     public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
