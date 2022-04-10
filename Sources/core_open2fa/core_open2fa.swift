@@ -5,7 +5,7 @@
 
 import Foundation
 
-public class CORE_OPEN2FA
+open class CORE_OPEN2FA
 {
     public static let core_version: String = "3.3.0"
     private var IV = String()
