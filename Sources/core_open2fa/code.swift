@@ -26,12 +26,12 @@ public struct code: Identifiable, Comparable {
     }
 }
 
-/// [CORE USAGE ONLY] Code with key for 2FA generation
-struct codeSecure: Identifiable, Codable {
-    let id: UUID
-    let date: Date
-    var name: String
-    var secret: String
+/// Code with secret for 2FA generation
+public struct codeSecure: Identifiable, Codable {
+    public let id: UUID
+    public let date: Date
+    public var name: String
+    public var secret: String
     
     init(_ csl: codeSecure_legacy) {
         self.id = csl.id

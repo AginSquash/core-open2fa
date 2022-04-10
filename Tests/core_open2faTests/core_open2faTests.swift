@@ -103,13 +103,6 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( cs.count == 3)
     }
     
-    func testExtraction() {
-        core.AddCode(service_name: "testExtractor", code: "q4qghrcn2c42bgbz")
-        let extractor = EXTRACTOR_OPEN2FA(core: core)
-        let service1 = extractor.getSecureCodes().first!
-        XCTAssert( service1.secret == "q4qghrcn2c42bgbz")
-    }
-    
     override func tearDown() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("test_file")
@@ -127,7 +120,6 @@ final class core_open2faTests: XCTestCase {
         ("testCheckPasswordCORRECTLY", testCheckPasswordCORRECTLY),
         ("testCheckPasswordFAKE", testCheckPasswordFAKE),
         ("testDeleteService", testDeleteService),
-        ("testTypeCastingForLegacyFiles", testTypeCastingForLegacyFiles),
-        ("testExtraction", testExtraction)
+        ("testTypeCastingForLegacyFiles", testTypeCastingForLegacyFiles)
     ]
 }

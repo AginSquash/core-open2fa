@@ -146,7 +146,15 @@ public class CORE_OPEN2FA
         
         return .SUCCEFULL
     }
+    
+    public func _ExportServiceSECRET(with id: UUID) -> codeSecure? {
+        return codes.first(where: {$0.id == id})
+    }
 
+    public func _ExportAllServicesSECRETs(with id: UUID) -> [codeSecure] {
+        return codes
+    }
+    
     public func migrateSavedFile() -> FUNC_RESULT {
         self.codes.sort(by: { $0.date < $1.date })
         
