@@ -147,11 +147,11 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
     
-    public func _ExportServiceSECRET(with id: UUID) -> codeSecure? {
+    public func NoCrypt_ExportServiceSECRET(with id: UUID) -> codeSecure? {
         return codes.first(where: {$0.id == id})
     }
 
-    public func _ExportAllServicesSECRETs(with id: UUID) -> [codeSecure] {
+    public func NoCrypt_ExportAllServicesSECRETS() -> [codeSecure] {
         return codes
     }
     
