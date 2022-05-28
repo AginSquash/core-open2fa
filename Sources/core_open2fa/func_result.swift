@@ -27,6 +27,7 @@ public enum FUNC_RESULT
     case NOT_ENCODABLE
     case PASSCHECK_NULL
     case CANNOT_FIND_ID
+    case INCORRECT_OTP_TYPE
     
     // only for preview
     case OTHER

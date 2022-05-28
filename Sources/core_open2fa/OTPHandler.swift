@@ -6,12 +6,37 @@
 import Foundation
 import SwiftOTP
 
-func getOTP(code: String) -> String?
+public enum OTP_Type: Codable {
+    case TOTP
+    case HOTP
+}
+
+func getOTP(code: codeSecure) -> String? {
+    if code.type == .TOTP {
+        return getTOTP(code: code.secret)
+    } else {
+        return getHOTP(code: code.secret, counter: code.counter)
+    }
+}
+
+func getTOTP(code: String) -> String?
 {
     if let data = base32DecodeToData(code)
     {
         if let totp = TOTP(secret: data) {
             let otpString = totp.generate(time: Date())
+            return otpString!
+        }
+    }
+    return nil
+}
+
+func getHOTP(code: String, counter: UInt) -> String?
+{
+    if let data = base32DecodeToData(code)
+    {
+        if let hotp = HOTP(secret: data) {
+            let otpString = hotp.generate(counter: UInt64(counter))
             return otpString!
         }
     }

@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "3.3.0"
+    public static let core_version: String = "4.0.0"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -79,13 +79,25 @@ public class CORE_OPEN2FA
     {
         var array = [code]()
         for c in codes {
-            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c.secret) ) )
+            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c) ) )
         }
         return array
     }
+    
+    public func updateHOTP(id: code.ID) -> code?
+    {
+        let cs_index = codes.firstIndex(where: { $0.id == id})!
+        codes[cs_index].updateHOTP()
+        let cs = codes[cs_index]
+        
+        guard cs.type == .HOTP else {
+            return nil
+        }
+        return code(id: id, date: cs.date, name: cs.name, codeSingle: getHOTP(code: cs.secret, counter: cs.counter))
+    }
 
     /// Added code to all codes and save file.
-    public func AddCode(service_name: String, code: String) -> FUNC_RESULT
+    public func AddCode(service_name: String, type: OTP_Type = .TOTP, code: String, counter: UInt = 0) -> FUNC_RESULT
     {
         for element in codes {
             if ( element.name == service_name )
@@ -94,11 +106,18 @@ public class CORE_OPEN2FA
             }
         }
         
-        if getOTP(code: code) == nil { 
-            return .CODE_INCORRECT
+        switch type {
+        case .TOTP:
+            if getTOTP(code: code) == nil {
+                return .CODE_INCORRECT  }
+            break
+        case .HOTP:
+            if getHOTP(code: code, counter: counter) == nil {
+                return .CODE_INCORRECT }
+            break
         }
         
-        self.codes.append( codeSecure(id: UUID(), date: Date(), name: service_name, secret: code) )
+        self.codes.append(codeSecure(id: UUID(), type: type, date: Date(), name: service_name, secret: code, counter: counter))
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {
@@ -167,25 +186,12 @@ public class CORE_OPEN2FA
     
     private func UpgradeFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {
         
-        // Fix for codes sorted with date
-        if version == "3.2.2" {
+        /// Just renaming 'code' to 'secret' in codeSecure file. Already with all 3.2.5 fix
+        if version < "3.1.0" {
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
-                    if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
-                        self.codes = decoded.sorted(by: { $0.date < $1.date })
-                        _ = self.SaveArray()
-                        print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
-                        return .SUCCEFULL
-                    } else { return .CANNOT_DECODE }
-                } else { return .PASS_INCORRECT }
-            } else { return .NO_CODES }
-        }
-        /// Bug with incorrect version in codesFile
-        if version == "3.1.0" {
-            if let codes = cf.codes {
-                if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
-                    if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
-                        self.codes = decoded
+                    if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
+                        self.codes = decoded.map({ codeSecure($0) }).sorted(by: { $0.date < $1.date })
                         _ = self.SaveArray()
                         print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
                         return .SUCCEFULL
@@ -194,11 +200,11 @@ public class CORE_OPEN2FA
             } else { return .NO_CODES }
         }
         
-        /// Just renaming 'code' to 'secret' in codeSecure file. Already with all 3.2.5 fix
-        if version < "3.1.0" {
+        /// Support HOTP codes type
+        if version < "4.0.0" {
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
-                    if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
+                    if let decoded = try? JSONDecoder().decode([codeSecure_legacy330].self, from: decrypted) {
                         self.codes = decoded.map({ codeSecure($0) }).sorted(by: { $0.date < $1.date })
                         _ = self.SaveArray()
                         print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")

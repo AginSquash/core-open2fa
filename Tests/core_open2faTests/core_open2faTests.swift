@@ -18,9 +18,13 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testTOTP() {
-        XCTAssert( getOTP(code: "q4qghrcn2c42bgbz") != nil )
+        XCTAssert( getTOTP(code: "q4qghrcn2c42bgbz") != nil )
     }
-
+    
+    func testHOTP() {
+        XCTAssert( getHOTP(code: "q4qghrcn2c42bgbz", counter: 0) != nil )
+    }
+    
     func testSaveRead() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("codes_test.data")
@@ -52,6 +56,20 @@ final class core_open2faTests: XCTestCase {
     func testAddService() {
         core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
         XCTAssert( core.getListOTP() != [])
+    }
+    
+    func testAddServiceHOTP() {
+        core.AddCode(service_name: "testHOTP", type: .HOTP, code: "q4qghrcn2c42bgbz", counter: 0)
+        print("HOTP: \(core.getListOTP())")
+        XCTAssert( core.getListOTP() != [])
+    }
+    
+    func testUpdateHOTP () {
+        core.AddCode(service_name: "testHOTP", type: .HOTP, code: "q4qghrcn2c42bgbz", counter: 0)
+        let service = core.codes.first(where: {$0.type == .HOTP})!
+        let result1 = core.updateHOTP(id: service.id)
+        let result2 = core.updateHOTP(id: service.id)
+        XCTAssert((result1!.codeSingle == "342376")&&(result2!.codeSingle == "527476"))
     }
     
     func testEditService() {
@@ -113,10 +131,13 @@ final class core_open2faTests: XCTestCase {
     static var allTests = [
         ("testSetup", testSetup),
         ("testTOTP", testTOTP),
+        ("testHOTP", testHOTP),
         ("testSaveRead", testSaveRead),
         ("testEncryption", testEncryption),
         ("testCreation", testCreation),
         ("testAddService", testAddService),
+        ("testUpdateHOTP", testUpdateHOTP),
+        ("testAddServiceHOTP", testAddServiceHOTP),
         ("testCheckPasswordCORRECTLY", testCheckPasswordCORRECTLY),
         ("testCheckPasswordFAKE", testCheckPasswordFAKE),
         ("testDeleteService", testDeleteService),
