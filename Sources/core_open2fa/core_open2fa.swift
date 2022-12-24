@@ -97,27 +97,80 @@ public class CORE_OPEN2FA
     }
 
     /// Added code to all codes and save file.
-    public func AddCode(service_name: String, type: OTP_Type = .TOTP, code: String, counter: UInt = 0) -> FUNC_RESULT
+    public func AddAccount(account_name: String, type: OTP_Type = .TOTP, secret: String, counter: UInt = 0) -> FUNC_RESULT
     {
-        for element in codes {
-            if ( element.name == service_name )
-            {
-                return .ALREADY_EXIST
-            }
+        if codes.first(where: { account_name == $0.name }) != nil {
+            return .ALREADY_EXIST
         }
         
         switch type {
         case .TOTP:
-            if getTOTP(code: code) == nil {
+            if getTOTP(code: secret) == nil {
                 return .CODE_INCORRECT  }
             break
         case .HOTP:
-            if getHOTP(code: code, counter: counter) == nil {
+            if getHOTP(code: secret, counter: counter) == nil {
                 return .CODE_INCORRECT }
             break
         }
         
-        self.codes.append(UNPROTECTED_AccountData(id: UUID(), type: type, date: Date(), name: service_name, secret: code, counter: counter))
+        self.codes.append(UNPROTECTED_AccountData(id: UUID(), type: type, date: Date(), name: account_name, secret: secret, counter: counter))
+        
+        // return save errors if exists
+        DispatchQueue.global(qos: .userInitiated).async {
+           _ = self.SaveArray()
+        }
+        
+        return .SUCCEFULL
+    }
+    
+    /// Added code to all codes and save file from UNPROTECTED_AccountData.
+    public func AddAccount(newAccount: UNPROTECTED_AccountData) -> FUNC_RESULT
+    {
+        if codes.first(where: { newAccount.name == $0.name }) != nil {
+            return .ALREADY_EXIST
+        }
+        
+        switch newAccount.type {
+        case .TOTP:
+            if getTOTP(code: newAccount.secret) == nil {
+                return .CODE_INCORRECT  }
+            break
+        case .HOTP:
+            if getHOTP(code: newAccount.secret, counter: newAccount.counter) == nil {
+                return .CODE_INCORRECT }
+            break
+        }
+        
+        self.codes.append(newAccount)
+        
+        // return save errors if exists
+        DispatchQueue.global(qos: .userInitiated).async {
+           _ = self.SaveArray()
+        }
+        
+        return .SUCCEFULL
+    }
+    
+    public func AddMulipleAccounts(newAccounts: [UNPROTECTED_AccountData]) -> FUNC_RESULT {
+        for account in newAccounts {
+            if codes.first(where: { account.name == $0.name }) != nil {
+                return .ALREADY_EXIST
+            }
+
+            switch account.type {
+            case .TOTP:
+                if getTOTP(code: account.secret) == nil {
+                    return .CODE_INCORRECT  }
+                break
+            case .HOTP:
+                if getHOTP(code: account.secret, counter: account.counter) == nil {
+                    return .CODE_INCORRECT }
+                break
+            }
+            
+            self.codes.append(account)
+        }
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {

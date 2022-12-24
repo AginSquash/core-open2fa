@@ -54,18 +54,44 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testAddService() {
-        core.AddCode(service_name: "test", code: "q4qghrcn2c42bgbz")
+        core.AddAccount(account_name: "test", secret: "q4qghrcn2c42bgbz")
         XCTAssert( core.getListOTP() != [])
     }
     
+    func testAddAlreadyExistService() {
+        core.AddAccount(account_name: "test2", secret: "q4qghrcn2c42bgbz")
+        XCTAssert( core.AddAccount(account_name: "test2", secret: "q4qghrcn2c42bgbz") == .ALREADY_EXIST )
+    }
+    
+    func testAddServiceFromUnprotected_accoundData() {
+        var core2 = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file2"), password: "pass")
+        
+        
+        let newAccount = UNPROTECTED_AccountData(name: "NewAccount1", secret: "q4qghrcn2c42bgbz")
+        core2.AddAccount(newAccount: newAccount)
+        let isAccountExist = core2.getListOTP().first(where: { $0.name == newAccount.name}) != nil
+        XCTAssert(isAccountExist)
+    }
+    
+    func testAddMultipleServiceFromUnprotected_accoundData() {
+        var core3 = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file3"), password: "pass")
+        
+        
+        let newAccounts = [UNPROTECTED_AccountData(name: "NewAccountM1", secret: "q4qghrcn2c42bgbz"), UNPROTECTED_AccountData(name: "NewAccountM2", secret: "q4qghrcn2c42bgbz")]
+        core3.AddMulipleAccounts(newAccounts: newAccounts)
+        let isAccountM1Exist = core3.getListOTP().first(where: { $0.name == "NewAccountM1"}) != nil
+        let isAccountM2Exist = core3.getListOTP().first(where: { $0.name == "NewAccountM2"}) != nil
+        XCTAssert(isAccountM1Exist&&isAccountM2Exist)
+    }
+    
     func testAddServiceHOTP() {
-        core.AddCode(service_name: "testHOTP", type: .HOTP, code: "q4qghrcn2c42bgbz", counter: 0)
+        core.AddAccount(account_name: "testHOTP", type: .HOTP, secret: "q4qghrcn2c42bgbz", counter: 0)
         print("HOTP: \(core.getListOTP())")
         XCTAssert( core.getListOTP() != [])
     }
     
     func testUpdateHOTP () {
-        core.AddCode(service_name: "testHOTP", type: .HOTP, code: "q4qghrcn2c42bgbz", counter: 0)
+        core.AddAccount(account_name: "testHOTP", type: .HOTP, secret: "q4qghrcn2c42bgbz", counter: 0)
         let service = core.codes.first(where: {$0.type == .HOTP})!
         let result1 = core.updateHOTP(id: service.id)
         let result2 = core.updateHOTP(id: service.id)
@@ -73,7 +99,7 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testEditService() {
-        _ = core.AddCode(service_name: "testEditService", code: "q4qghrcn2c42bgbz")
+        _ = core.AddAccount(account_name: "testEditService", secret: "q4qghrcn2c42bgbz")
         let codes = core.getListOTP()
         guard let choosenCode = codes.first(where: { $0.name == "testEditService" }) else {
             XCTFail("Cannot find added testEditServiceservice")
@@ -98,14 +124,14 @@ final class core_open2faTests: XCTestCase {
     }
     
     func testDeleteService() {
-        core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
+        core.AddAccount(account_name: "testDelete", secret: "q4qghrcn2c42bgbz")
         let codeID = core.getListOTP().first!.id
         core.DeleteCode(id: codeID)
         XCTAssert( core.getListOTP().first(where: {$0.id == codeID }) == nil)
     }
     
     func testSaveInMultiThreading() {
-        core.AddCode(service_name: "testDelete", code: "q4qghrcn2c42bgbz")
+        core.AddAccount(account_name: "testDelete", secret: "q4qghrcn2c42bgbz")
         usleep(1000000)
         let newcore = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file"), password: "pass")
         XCTAssert( newcore.getListOTP().first(where: {$0.name == "testDelete" }) != nil)

@@ -54,7 +54,8 @@ public struct UNPROTECTED_AccountData: Identifiable, Codable {
         self.counter = 0
     }
     
-    init(id: UUID, type: OTP_Type, date: Date, name: String, secret: String, counter: UInt) {
+    
+    init(id: UUID = UUID(), type: OTP_Type = .TOTP, date: Date = Date(), name: String, secret: String, counter: UInt = 0) {
         self.id = id
         self.type = type
         self.date = date
