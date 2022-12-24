@@ -11,7 +11,7 @@ public enum OTP_Type: Codable {
     case HOTP
 }
 
-func getOTP(code: codeSecure) -> String? {
+func getOTP(code: UNPROTECTED_AccountData) -> String? {
     if code.type == .TOTP {
         return getTOTP(code: code.secret)
     } else {

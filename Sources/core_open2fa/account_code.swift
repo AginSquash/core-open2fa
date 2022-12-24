@@ -8,13 +8,13 @@
 import Foundation
 
 /// Code that can be used outside of core
-public struct code: Identifiable, Comparable {
+public struct Account_Code: Identifiable, Comparable {
     public let id: UUID
     public let date: Date
     public var name: String
     public var codeSingle: String?
     
-    static public func < (lhd: code, rhd: code) -> Bool {
+    static public func < (lhd: Account_Code, rhd: Account_Code) -> Bool {
         lhd.date < rhd.date
     }
     
@@ -28,7 +28,7 @@ public struct code: Identifiable, Comparable {
 
 
 /// Code with secret for 2FA generation
-public struct codeSecure: Identifiable, Codable {
+public struct UNPROTECTED_AccountData: Identifiable, Codable {
     public let id: UUID
     public let type: OTP_Type
     public let date: Date

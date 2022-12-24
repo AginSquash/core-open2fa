@@ -117,7 +117,7 @@ final class core_open2faTests: XCTestCase {
         let code = "q4qghrcn2c42bgbz"
         let csl = codeSecure_legacy(id: uuid, date: Date(), name: name, code: code)
         let csl_array = [csl, csl, csl]
-        let cs: [codeSecure] = csl_array.map({ codeSecure($0) })
+        let cs: [UNPROTECTED_AccountData] = csl_array.map({ UNPROTECTED_AccountData($0) })
         XCTAssert( cs.count == 3)
     }
     

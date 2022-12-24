@@ -12,7 +12,7 @@ public class CORE_OPEN2FA
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     private var passcheck: Data? = nil
-    internal var codes = [codeSecure]()
+    internal var codes = [UNPROTECTED_AccountData]()
     
     /// Check password for correctly
     public static func checkPassword(fileURL: URL, password: String) -> FUNC_RESULT {
@@ -66,7 +66,7 @@ public class CORE_OPEN2FA
         
         if let codes = cf.codes {
             if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
-                if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                if let decoded = try? JSONDecoder().decode([UNPROTECTED_AccountData].self, from: decrypted) {
                     self.codes = decoded
                     return .SUCCEFULL
                 } else { return .CANNOT_DECODE }
@@ -75,16 +75,16 @@ public class CORE_OPEN2FA
     }
 
     /// Return list of codes (id, date, name and 2FA code)
-    public func getListOTP() -> [code]
+    public func getListOTP() -> [Account_Code]
     {
-        var array = [code]()
+        var array = [Account_Code]()
         for c in codes {
-            array.append( code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c) ) )
+            array.append( Account_Code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c) ) )
         }
         return array
     }
     
-    public func updateHOTP(id: code.ID) -> code?
+    public func updateHOTP(id: Account_Code.ID) -> Account_Code?
     {
         let cs_index = codes.firstIndex(where: { $0.id == id})!
         codes[cs_index].updateHOTP()
@@ -93,7 +93,7 @@ public class CORE_OPEN2FA
         guard cs.type == .HOTP else {
             return nil
         }
-        return code(id: id, date: cs.date, name: cs.name, codeSingle: getHOTP(code: cs.secret, counter: cs.counter))
+        return Account_Code(id: id, date: cs.date, name: cs.name, codeSingle: getHOTP(code: cs.secret, counter: cs.counter))
     }
 
     /// Added code to all codes and save file.
@@ -117,7 +117,7 @@ public class CORE_OPEN2FA
             break
         }
         
-        self.codes.append(codeSecure(id: UUID(), type: type, date: Date(), name: service_name, secret: code, counter: counter))
+        self.codes.append(UNPROTECTED_AccountData(id: UUID(), type: type, date: Date(), name: service_name, secret: code, counter: counter))
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {
@@ -166,11 +166,11 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
     
-    public func NoCrypt_ExportServiceSECRET(with id: UUID) -> codeSecure? {
+    public func NoCrypt_ExportServiceSECRET(with id: UUID) -> UNPROTECTED_AccountData? {
         return codes.first(where: {$0.id == id})
     }
 
-    public func NoCrypt_ExportAllServicesSECRETS() -> [codeSecure] {
+    public func NoCrypt_ExportAllServicesSECRETS() -> [UNPROTECTED_AccountData] {
         return codes
     }
     
@@ -191,7 +191,7 @@ public class CORE_OPEN2FA
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
                     if let decoded = try? JSONDecoder().decode([codeSecure_legacy].self, from: decrypted) {
-                        self.codes = decoded.map({ codeSecure($0) }).sorted(by: { $0.date < $1.date })
+                        self.codes = decoded.map({ UNPROTECTED_AccountData($0) }).sorted(by: { $0.date < $1.date })
                         _ = self.SaveArray()
                         print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
                         return .SUCCEFULL
@@ -205,7 +205,7 @@ public class CORE_OPEN2FA
             if let codes = cf.codes {
                 if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
                     if let decoded = try? JSONDecoder().decode([codeSecure_legacy330].self, from: decrypted) {
-                        self.codes = decoded.map({ codeSecure($0) }).sorted(by: { $0.date < $1.date })
+                        self.codes = decoded.map({ UNPROTECTED_AccountData($0) }).sorted(by: { $0.date < $1.date })
                         _ = self.SaveArray()
                         print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
                         return .SUCCEFULL
@@ -217,7 +217,7 @@ public class CORE_OPEN2FA
         // no fix for version needed. Just update CF version
         if let codes = cf.codes {
             if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
-                if let decoded = try? JSONDecoder().decode([codeSecure].self, from: decrypted) {
+                if let decoded = try? JSONDecoder().decode([UNPROTECTED_AccountData].self, from: decrypted) {
                     self.codes = decoded.sorted(by: { $0.date < $1.date })
                     _ = self.SaveArray()
                     print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
@@ -242,11 +242,11 @@ public class CORE_OPEN2FA
     }
 
     /// Return example of codes (id, date, name and 2FA code)
-    static public func getExample() -> [code]
+    static public func getExample() -> [Account_Code]
     {
-        var array = [code]()
-        array.append( code(id: UUID(), date: Date(), name: "Example 1", codeSingle: "123456") )
-        array.append( code(id: UUID(), date: Date(), name: "Example 2", codeSingle: "456789") )
+        var array = [Account_Code]()
+        array.append( Account_Code(id: UUID(), date: Date(), name: "Example 1", codeSingle: "123456") )
+        array.append( Account_Code(id: UUID(), date: Date(), name: "Example 2", codeSingle: "456789") )
         return array
     }
     
