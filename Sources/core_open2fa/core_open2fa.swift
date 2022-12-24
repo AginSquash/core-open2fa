@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "4.0.0"
+    public static let core_version: String = "5.0.0"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
