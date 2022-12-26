@@ -152,7 +152,8 @@ public class CORE_OPEN2FA
         return .SUCCEFULL
     }
     
-    public func AddMulipleAccounts(newAccounts: [UNPROTECTED_AccountData]) -> FUNC_RESULT {
+    public func AddMulipleAccounts(newAccounts: [UNPROTECTED_AccountData]) -> Int {
+        var totalAdded = 0
         for account in newAccounts {
             if codes.first(where: { account.name == $0.name }) != nil {
                 continue
@@ -170,14 +171,18 @@ public class CORE_OPEN2FA
             }
             
             self.codes.append(account)
+            totalAdded += 1
         }
         
+        if totalAdded == 0 {
+            return 0
+        }
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {
            _ = self.SaveArray()
         }
         
-        return .SUCCEFULL
+        return totalAdded
     }
     
     public func EditCode(id: UUID, newName: String) -> FUNC_RESULT {
