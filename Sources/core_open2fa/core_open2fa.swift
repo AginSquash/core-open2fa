@@ -155,17 +155,17 @@ public class CORE_OPEN2FA
     public func AddMulipleAccounts(newAccounts: [UNPROTECTED_AccountData]) -> FUNC_RESULT {
         for account in newAccounts {
             if codes.first(where: { account.name == $0.name }) != nil {
-                return .ALREADY_EXIST
+                continue
             }
 
             switch account.type {
             case .TOTP:
                 if getTOTP(code: account.secret) == nil {
-                    return .CODE_INCORRECT  }
+                    continue  }
                 break
             case .HOTP:
                 if getHOTP(code: account.secret, counter: account.counter) == nil {
-                    return .CODE_INCORRECT }
+                    continue }
                 break
             }
             
