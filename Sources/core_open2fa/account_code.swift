@@ -12,16 +12,18 @@ public struct Account_Code: Identifiable, Comparable {
     public let id: UUID
     public let date: Date
     public var name: String
+    public var issuer: String
     public var codeSingle: String?
     
     static public func < (lhd: Account_Code, rhd: Account_Code) -> Bool {
         lhd.date < rhd.date
     }
     
-    public init(id: UUID, date: Date, name: String, codeSingle: String?) {
+    public init(id: UUID, date: Date, name: String, issuer: String, codeSingle: String?) {
         self.id = id
         self.date = date
         self.name = name
+        self.issuer = issuer
         self.codeSingle = codeSingle
     }
 }
@@ -29,6 +31,60 @@ public struct Account_Code: Identifiable, Comparable {
 
 /// Code with secret for 2FA generation
 public struct UNPROTECTED_AccountData: Identifiable, Codable {
+    public let id: UUID
+    public let type: OTP_Type
+    public let date: Date
+    public var name: String
+    public var issuer: String
+    public var secret: String
+    public var counter: UInt = 0
+    
+    init(_ csl: codeSecure_legacy) {
+        self.id = csl.id
+        self.type = .TOTP
+        self.date = csl.date
+        self.name = csl.name
+        self.secret = csl.code
+        self.counter = 0
+        self.issuer = ""
+    }
+    
+    init(_ csl: codeSecure_legacy330) {
+        self.id = csl.id
+        self.type = .TOTP
+        self.date = csl.date
+        self.name = csl.name
+        self.secret = csl.secret
+        self.counter = 0
+        self.issuer = ""
+    }
+    
+    init(_ csl: codeSecure_legacy500) {
+        self.id = csl.id
+        self.type = .TOTP
+        self.date = csl.date
+        self.name = csl.name
+        self.secret = csl.secret
+        self.counter = 0
+        self.issuer = ""
+    }
+    
+    public init(id: UUID = UUID(), type: OTP_Type = .TOTP, date: Date = Date(), name: String, issuer: String = "", secret: String, counter: UInt = 0) {
+        self.id = id
+        self.type = type
+        self.date = date
+        self.name = name
+        self.issuer = issuer
+        self.secret = secret
+        self.counter = counter
+    }
+    
+    mutating func updateHOTP() {
+        self.counter += 1
+    }
+}
+
+public struct codeSecure_legacy500: Identifiable, Codable {
     public let id: UUID
     public let type: OTP_Type
     public let date: Date

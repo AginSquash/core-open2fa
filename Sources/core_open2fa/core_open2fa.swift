@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "5.0.0"
+    public static let core_version: String = "6.0.0"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -79,7 +79,7 @@ public class CORE_OPEN2FA
     {
         var array = [Account_Code]()
         for c in codes {
-            array.append( Account_Code(id: c.id, date: c.date, name: c.name, codeSingle: getOTP(code: c) ) )
+            array.append( Account_Code(id: c.id, date: c.date, name: c.name, issuer: c.issuer, codeSingle: getOTP(code: c) ) )
         }
         return array
     }
@@ -93,11 +93,11 @@ public class CORE_OPEN2FA
         guard cs.type == .HOTP else {
             return nil
         }
-        return Account_Code(id: id, date: cs.date, name: cs.name, codeSingle: getHOTP(code: cs.secret, counter: cs.counter))
+        return Account_Code(id: id, date: cs.date, name: cs.name, issuer: cs.issuer, codeSingle: getHOTP(code: cs.secret, counter: cs.counter))
     }
 
     /// Added code to all codes and save file.
-    public func AddAccount(account_name: String, type: OTP_Type = .TOTP, secret: String, counter: UInt = 0) -> FUNC_RESULT
+    public func AddAccount(account_name: String, issuer: String = "", type: OTP_Type = .TOTP, secret: String, counter: UInt = 0) -> FUNC_RESULT
     {
         if codes.first(where: { account_name == $0.name }) != nil {
             return .ALREADY_EXIST
@@ -114,7 +114,7 @@ public class CORE_OPEN2FA
             break
         }
         
-        self.codes.append(UNPROTECTED_AccountData(id: UUID(), type: type, date: Date(), name: account_name, secret: secret, counter: counter))
+        self.codes.append(UNPROTECTED_AccountData(id: UUID(), type: type, date: Date(), name: account_name, issuer: issuer, secret: secret, counter: counter))
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {
@@ -272,6 +272,19 @@ public class CORE_OPEN2FA
             } else { return .NO_CODES }
         }
         
+        if version < "6.0.0" {
+            if let codes = cf.codes {
+                if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
+                    if let decoded = try? JSONDecoder().decode([codeSecure_legacy500].self, from: decrypted) {
+                        self.codes = decoded.map({ UNPROTECTED_AccountData($0) }).sorted(by: { $0.date < $1.date })
+                        _ = self.SaveArray()
+                        print("DEBUG: successfully updated from \(version) to \(CORE_OPEN2FA.core_version)")
+                        return .SUCCEFULL
+                    } else { return .CANNOT_DECODE }
+                } else { return .PASS_INCORRECT }
+            } else { return .NO_CODES }
+        }
+        
         // no fix for version needed. Just update CF version
         if let codes = cf.codes {
             if let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: codes) {
@@ -303,8 +316,8 @@ public class CORE_OPEN2FA
     static public func getExample() -> [Account_Code]
     {
         var array = [Account_Code]()
-        array.append( Account_Code(id: UUID(), date: Date(), name: "Example 1", codeSingle: "123456") )
-        array.append( Account_Code(id: UUID(), date: Date(), name: "Example 2", codeSingle: "456789") )
+        array.append( Account_Code(id: UUID(), date: Date(), name: "Example 1", issuer: "Issuer 1", codeSingle: "123456") )
+        array.append( Account_Code(id: UUID(), date: Date(), name: "Example 2", issuer: "Issuer 2", codeSingle: "456789") )
         return array
     }
     
