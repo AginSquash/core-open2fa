@@ -126,7 +126,7 @@ final class core_open2faTests: XCTestCase {
     func testDeleteService() {
         core.AddAccount(account_name: "testDelete", secret: "q4qghrcn2c42bgbz")
         let codeID = core.getListOTP().first!.id
-        core.DeleteCode(id: codeID)
+        core.DeleteAccount(id: codeID)
         XCTAssert( core.getListOTP().first(where: {$0.id == codeID }) == nil)
     }
     

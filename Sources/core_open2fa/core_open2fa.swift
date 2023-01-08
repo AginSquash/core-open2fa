@@ -209,7 +209,7 @@ public class CORE_OPEN2FA
     }
 
     /// This function delete code by UUID
-    public func DeleteCode(id: UUID) -> FUNC_RESULT
+    public func DeleteAccount(id: UUID) -> FUNC_RESULT
     {
         self.codes.removeAll(where: { $0.id == id } )
         /*
