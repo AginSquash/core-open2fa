@@ -185,9 +185,9 @@ public class CORE_OPEN2FA
         return totalAdded
     }
     
-    public func EditCode(id: UUID, newName: String) -> FUNC_RESULT {
+    public func EditAccount(id: UUID, newName: String, newIssuer: String) -> FUNC_RESULT {
         for element in codes {
-            if ( element.name == newName )
+            if ( element.name == newName ) && ( element.issuer == newIssuer )
             {
                 return .ALREADY_EXIST
             }
@@ -198,6 +198,7 @@ public class CORE_OPEN2FA
         }
         
         self.codes[index].name = newName
+        self.codes[index].issuer = newIssuer
         
         // return save errors if exists
         DispatchQueue.global(qos: .userInitiated).async {

@@ -106,7 +106,7 @@ final class core_open2faTests: XCTestCase {
             return
         }
         
-        _ = core.EditCode(id: choosenCode.id, newName: "testEditService2")
+        _ = core.EditAccount(id: choosenCode.id, newName: "testEditService2", newIssuer: "Issuer2")
         
         let newCodes = core.getListOTP()
         let success = (newCodes.first(where: { $0.name == "testEditService" }) == nil) && (newCodes.first(where: { $0.name == "testEditService2" }) != nil)
