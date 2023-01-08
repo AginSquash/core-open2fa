@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "6.0.0"
+    public static let core_version: String = "6.2.0"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -99,7 +99,7 @@ public class CORE_OPEN2FA
     /// Added code to all codes and save file.
     public func AddAccount(account_name: String, issuer: String = "", type: OTP_Type = .TOTP, secret: String, counter: UInt = 0) -> FUNC_RESULT
     {
-        if codes.first(where: { account_name == $0.name }) != nil {
+        if codes.first(where: { (account_name == $0.name)&&(issuer == $0.issuer) }) != nil {
             return .ALREADY_EXIST
         }
         
