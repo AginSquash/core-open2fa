@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "6.2.0"
+    public static let core_version: String = "6.3.0"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -241,6 +241,18 @@ public class CORE_OPEN2FA
         }
         
         return .SUCCEFULL
+    }
+    
+    public func loadNewFileFromData(newData: Data) -> FUNC_RESULT {
+        guard let newPasscheck = try? JSONDecoder().decode(codesFile.self, from: newData).passcheck else { return .CANNOT_DECODE }
+        guard let decrypted = DecryptAES256(key: self.pass, iv: self.IV, data: newPasscheck) else  { return .PASS_INCORRECT }
+       
+        if let decodedWorld = try? JSONDecoder().decode(String.self, from: decrypted) {
+            if dictionary_words.contains(decodedWorld) {
+                guard SaveFile(fileURL: fileURL, data: newData) == .SUCCEFULL else { return .CANNOT_SAVE_FILE }
+                return Refresh()
+            } else { return .PASS_INCORRECT }
+        } else { return .CANNOT_DECODE }
     }
     
     private func UpgradeFileVersion(from version: String, withCF cf: codesFile) -> FUNC_RESULT {

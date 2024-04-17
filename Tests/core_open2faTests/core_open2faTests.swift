@@ -147,6 +147,17 @@ final class core_open2faTests: XCTestCase {
         XCTAssert( cs.count == 3)
     }
     
+    
+    func testLoadNewFileFromData() {
+        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let data = try! Data(contentsOf: fileURL.appendingPathComponent("test_file"))
+        
+        var core2 = CORE_OPEN2FA(fileURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("test_file2"), password: "pass2")
+        let data2 = try! Data(contentsOf: fileURL.appendingPathComponent("test_file2"))
+        
+        XCTAssert( (core.loadNewFileFromData(newData: data2) != .SUCCEFULL) && (core.loadNewFileFromData(newData: data) == .NO_CODES ))
+    }
+    
     override func tearDown() {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = fileURL.appendingPathComponent("test_file")
