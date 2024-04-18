@@ -7,7 +7,7 @@ import Foundation
 
 public class CORE_OPEN2FA
 {
-    public static let core_version: String = "6.3.0"
+    public static let core_version: String = "6.3.1"
     private var IV = String()
     private var pass = String()
     private var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -241,6 +241,29 @@ public class CORE_OPEN2FA
         }
         
         return .SUCCEFULL
+    }
+    
+    public func addNewAccountsFromData(newData: Data) -> FUNC_RESULT {
+        guard let decoded = try? JSONDecoder().decode(codesFile.self, from: newData) else { return .CANNOT_DECODE }
+        guard let codes = decoded.codes else { return .NO_CODES }
+        guard let decrypted_codes = DecryptAES256(key: self.pass, iv: self.IV, data: codes) else { return .PASS_INCORRECT }
+        if let decoded_codes = try? JSONDecoder().decode([UNPROTECTED_AccountData].self, from: decrypted_codes) {
+            let newAccounts = decoded_codes.filter({ !self.codes.contains($0) })
+            
+            for account in newAccounts {
+                if let index = self.codes.firstIndex(where: { ($0.id == account.id) && ($0.secret == account.secret) }) {
+                    self.codes[index] = account
+                } else {
+                    self.codes.append(account)
+                }
+            }
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+               _ = self.SaveArray()
+            }
+            
+            return .SUCCEFULL
+        } else { return .CANNOT_DECODE }
     }
     
     public func loadNewFileFromData(newData: Data) -> FUNC_RESULT {

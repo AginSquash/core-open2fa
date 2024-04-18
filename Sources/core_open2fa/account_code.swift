@@ -30,7 +30,7 @@ public struct Account_Code: Identifiable, Comparable {
 
 
 /// Code with secret for 2FA generation
-public struct UNPROTECTED_AccountData: Identifiable, Codable {
+public struct UNPROTECTED_AccountData: Identifiable, Codable, Equatable {
     public let id: UUID
     public let type: OTP_Type
     public let date: Date
